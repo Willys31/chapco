@@ -1,0 +1,35 @@
+export const company = {
+  name: 'CHAP & CO',
+  legalName: 'CHAP IMPORT & CO',
+  tagline: 'De la terre africaine aux marchés du monde',
+  description: 'Négoce et exportation de matières premières agricoles & alimentaires',
+  foundedYear: 2023,
+  location: {
+    city: 'Abidjan',
+    country: "Côte d'Ivoire",
+  },
+  contact: {
+    name: 'Cedric Messou',
+    phone: '+225 07 04 76 76 76',
+    email: 'Cmessou@chapco.ci',
+  },
+  navigation: [
+    { label: 'Accueil', href: '/' },
+    { label: 'À propos', href: '/a-propos' },
+    { label: 'Produits', href: '/produits' },
+    { label: 'Qualité', href: '/qualite' },
+    { label: 'Logistique', href: '/logistique' },
+    { label: 'Contact', href: '/contact' },
+  ],
+  products: [
+    "Attiéké déshydraté",
+    "Huile rouge de palme",
+    "Karité",
+    "Hibiscus",
+    "Hévéa",
+    "Noix de coco",
+    "Anacarde",
+    "Cacao",
+    "Café",
+  ],
+};

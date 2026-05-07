@@ -1,0 +1,103 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* === CHAP & CO Color System === */
+
+  /* Navy — couleur principale du logo */
+  --color-navy-50: #EEF1F8;
+  --color-navy-100: #D6DEEC;
+  --color-navy-500: #3D4F8A;
+  --color-navy-700: #1E2A5E;
+  --color-navy-900: #0F1530;
+
+  /* Forest — vert forêt des titres */
+  --color-forest-50: #F0F5F0;
+  --color-forest-100: #D9E5D9;
+  --color-forest-500: #5A8A5A;
+  --color-forest-700: #3F6B3F;
+  --color-forest-900: #1F3A1F;
+
+  /* Sage — vert menthe pâle (flèches signature) */
+  --color-sage-100: #E8F1E8;
+  --color-sage-300: #C8E0C8;
+  --color-sage-500: #A8C9A8;
+  --color-sage-700: #7FB069;
+
+  /* Neutrals */
+  --color-cream: #FAF8F3;
+  --color-ink: #1A1A2E;
+
+  /* === Fonts === */
+  --font-poppins: 'Poppins', system-ui, sans-serif;
+  --font-inter: 'Inter', system-ui, sans-serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom text selection */
+::selection {
+  background-color: #1E2A5E;
+  color: #C8E0C8;
+}
+
+/* Body defaults */
+body {
+  background: #FAF8F3;
+  color: #1A1A2E;
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Poppins for headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-poppins), 'Poppins', system-ui, sans-serif;
+}
+
+/* Perspective utility for 3D animations */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.glass-dark {
+  background: rgba(15, 21, 48, 0.7);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(200, 224, 200, 0.1);
+}
+
+/* Container base */
+.container-base {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-base {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-base {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
