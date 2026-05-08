@@ -1,133 +1,109 @@
 'use client';
 
-import { useRef } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowsBackground } from '@/components/animations/ArrowsBackground';
 import { Button } from '@/components/ui/Button';
 
-const Globe3D = dynamic(
-  () => import('@/components/animations/Globe3D').then((m) => ({ default: m.Globe3D })),
+const InteractiveGlobe = dynamic(
+  () => import('@/components/animations/InteractiveGlobe').then((m) => ({ default: m.InteractiveGlobe })),
   { ssr: false, loading: () => null }
 );
 
+function FadeIn({
+  children,
+  delay = 0,
+  duration = 0.7,
+  className,
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  duration?: number;
+  className?: string;
+}) {
+  return (
+    <motion.div
+      className={className}
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration, delay, ease: [0.16, 1, 0.3, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 export function Hero() {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end start'],
-  });
-
-  const globeY = useTransform(scrollYProgress, [0, 1], ['0%', '-18%']);
-  const textY = useTransform(scrollYProgress, [0, 1], ['0%', '22%']);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
-
   return (
     <section
-      ref={containerRef}
-      className="relative h-screen min-h-[700px] overflow-hidden flex items-center justify-center"
+      className="relative min-h-screen flex items-center overflow-hidden"
       style={{
-        background:
-          'radial-gradient(ellipse at center, #1E2A5E 0%, #0F1530 65%, #050816 100%)',
+        background: 'radial-gradient(ellipse at 30% 50%, #1E2A5E 0%, #0F1530 60%, #050816 100%)',
       }}
     >
-      {/* ── Couche 1 : Globe 3D ────────────────────────────────────────────── */}
-      <motion.div
-        className="absolute inset-0 z-[1]"
-        style={{ y: globeY }}
-        initial={{ opacity: 0, scale: 0.85 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-      >
-        <Globe3D />
-      </motion.div>
-
-      {/* ── Couche 2 : Vignette overlay ────────────────────────────────────── */}
-      <div
-        className="absolute inset-0 z-[2] pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(ellipse at center, transparent 25%, rgba(5, 8, 22, 0.55) 75%, rgba(5, 8, 22, 0.85) 100%)',
-        }}
-      />
-
-      {/* ── Couche 3 : Flèches signature (très discrètes) ──────────────────── */}
-      <div className="absolute inset-0 z-[3] pointer-events-none opacity-[0.07]">
+      {/* Arrows signature — très subtiles */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.05]">
         <ArrowsBackground baseOpacity={1} />
       </div>
 
-      {/* ── Couche 4 : Contenu textuel ─────────────────────────────────────── */}
+      {/* Grid principal */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 pt-28 pb-16 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-screen">
+
+        {/* ── COLONNE TEXTE (ordre 2 sur mobile, 1 sur desktop) ── */}
+        <div className="order-2 lg:order-1 text-center lg:text-left">
+
+          <FadeIn delay={0.7} duration={0.9}>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-light tracking-tight leading-[1.07] text-white mb-7">
+              Le meilleur du terroir{' '}
+              <em className="italic text-sage-300">africain</em>
+              <br />
+              aux marchés du monde
+            </h1>
+          </FadeIn>
+
+          <FadeIn delay={1.1}>
+            <p className="text-base md:text-lg font-light text-cream/65 tracking-wide mb-10 max-w-md mx-auto lg:mx-0">
+              Négoce de matières premières agricoles &amp; alimentaires
+            </p>
+          </FadeIn>
+
+          <FadeIn delay={1.4}>
+            <div className="flex items-center justify-center lg:justify-start gap-8 flex-wrap">
+              <Button variant="primary" size="md">
+                Découvrir nos produits
+              </Button>
+              <Link
+                href="/a-propos"
+                className="group text-white/80 text-sm font-light hover:text-sage-300 transition-colors duration-300"
+              >
+                Notre histoire{' '}
+                <span className="inline-block ml-1 group-hover:translate-x-1 transition-transform duration-300">
+                  →
+                </span>
+              </Link>
+            </div>
+          </FadeIn>
+        </div>
+
+        {/* ── COLONNE GLOBE (ordre 1 sur mobile, 2 sur desktop) ── */}
+        <FadeIn
+          delay={0.3}
+          duration={1.5}
+          className="order-1 lg:order-2 h-[360px] md:h-[480px] lg:h-[600px] w-full"
+        >
+          <InteractiveGlobe />
+        </FadeIn>
+      </div>
+
+      {/* Scroll indicator */}
       <motion.div
-        className="relative z-[4] text-center max-w-4xl mx-auto px-6"
-        style={{ y: textY, opacity: contentOpacity }}
-      >
-        {/* Eyebrow */}
-        <motion.p
-          className="text-xs md:text-sm tracking-[0.3em] uppercase text-sage-300 mb-8"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.8, ease: 'easeOut' }}
-        >
-          Abidjan — Côte d&apos;Ivoire
-        </motion.p>
-
-        {/* Titre */}
-        <motion.h1
-          className="text-5xl md:text-6xl lg:text-7xl font-light tracking-tight leading-[1.1] text-white mb-8"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 1.1, ease: [0.16, 1, 0.3, 1] }}
-        >
-          Le Meilleur du Terroir{' '}
-          <em className="italic text-sage-300">Africain</em>
-          <br />
-          aux marchés du monde
-        </motion.h1>
-
-        {/* Sous-titre */}
-        <motion.p
-          className="text-base md:text-lg font-light text-cream/70 tracking-wide mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 1.8, ease: 'easeOut' }}
-        >
-          Négoce de matières premières agricoles &amp; alimentaires
-        </motion.p>
-
-        {/* CTAs */}
-        <motion.div
-          className="flex items-center justify-center gap-8 flex-wrap"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 2.1, ease: 'easeOut' }}
-        >
-          <Button variant="primary" size="md">
-            Découvrir nos produits
-          </Button>
-          <Link
-            href="/a-propos"
-            className="group text-white/80 text-sm font-light hover:text-sage-300 transition-colors duration-300"
-          >
-            Notre histoire{' '}
-            <span className="inline-block ml-1 group-hover:translate-x-1 transition-transform duration-300">
-              →
-            </span>
-          </Link>
-        </motion.div>
-      </motion.div>
-
-      {/* ── Scroll indicator ───────────────────────────────────────────────── */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-[4] flex flex-col items-center gap-2"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 3.0, duration: 0.8 }}
+        transition={{ delay: 2.5, duration: 0.8 }}
       >
-        <span className="text-white/25 text-[10px] tracking-[0.35em] uppercase">
-          Scroll
-        </span>
+        <span className="text-white/25 text-[10px] tracking-[0.35em] uppercase">Scroll</span>
         <motion.div
           className="w-px h-8 bg-gradient-to-b from-sage-300/50 to-transparent"
           animate={{ scaleY: [1, 0.4, 1], opacity: [0.5, 1, 0.5] }}

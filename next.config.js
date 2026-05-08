@@ -2,10 +2,7 @@ const path = require("path");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Allow Turbopack (default in Next.js 16) without webpack config conflict
-  turbopack: {},
-
-  // Webpack config (only used with --webpack flag)
+  // Webpack config
   webpack: (config) => {
     // Ensure single React instance to avoid "Class extends undefined" error
     if (!config.resolve) config.resolve = {};
