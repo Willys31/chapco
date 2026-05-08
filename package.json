@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env NEXT_TELEMETRY_DISABLED=1 next dev --webpack",
+    "dev": "cross-env NEXT_TELEMETRY_DISABLED=1 NODE_ENV=development next dev --webpack",
     "dev:debug": "cross-env NEXT_TELEMETRY_DISABLED=1 NODE_OPTIONS=--max-old-space-size=4096 next dev",
     "build": "next build",
     "start": "next start",
@@ -19,6 +19,7 @@
     "lucide-react": "^1.14.0",
     "next": "16.2.5",
     "react": "19.2.4",
+    "react-countup": "^6.5.3",
     "react-dom": "19.2.4",
     "react-spring": "^10.0.3",
     "tailwind-merge": "^3.5.0"

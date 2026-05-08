@@ -15,11 +15,9 @@ const nextConfig = {
     return config;
   },
 
-  // Allow external images (Unsplash)
+  // Disable image optimization for dev (re-enable with proper remotePatterns in prod)
   images: {
-    remotePatterns: [
-      { protocol: 'https', hostname: 'images.unsplash.com' },
-    ],
+    unoptimized: true,
   },
 };
 

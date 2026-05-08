@@ -59,8 +59,8 @@ const ATMO_FRAG = /* glsl */ `
   varying vec3 vNormal;
   void main() {
     float d = dot(vNormal, vec3(0.0, 0.0, 1.0));
-    float intensity = pow(1.0 - abs(d), 4.5);
-    gl_FragColor = vec4(0.25, 0.5, 1.0, intensity) * intensity;
+    float intensity = pow(1.0 - abs(d), 4.0);
+    gl_FragColor = vec4(0.05, 0.38, 0.92, intensity) * intensity * 1.3;
   }
 `;
 
@@ -154,8 +154,10 @@ function EarthScene({
           map={dayMap}
           bumpMap={bumpMap}
           bumpScale={0.12}
-          specular={new THREE.Color(0x222222)}
-          shininess={4}
+          specular={new THREE.Color(0x1a4a8a)}
+          shininess={18}
+          emissive={new THREE.Color(0x061830)}
+          emissiveIntensity={0.45}
         />
       </mesh>
 
@@ -216,7 +218,7 @@ export function InteractiveGlobe() {
     <div className="relative w-full h-full flex flex-col items-center justify-center select-none">
       {/* Halo CSS derrière le globe */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="w-[65%] h-[65%] rounded-full bg-blue-600/10 blur-[90px]" />
+        <div className="w-[70%] h-[70%] rounded-full bg-blue-500/20 blur-[80px]" />
       </div>
 
       {/* Canvas 3D */}
@@ -233,9 +235,9 @@ export function InteractiveGlobe() {
           dpr={[1, 2]}
           gl={{ antialias: true, alpha: true }}
         >
-          <ambientLight intensity={0.4} />
-          <directionalLight position={[5, 3, 5]} intensity={1.6} />
-          <directionalLight position={[-5, -3, -5]} color="#1a3060" intensity={0.25} />
+          <ambientLight intensity={0.35} />
+          <directionalLight position={[5, 3, 5]} intensity={1.4} />
+          <directionalLight position={[-5, -3, -5]} color="#1a5aaa" intensity={0.5} />
 
           {/* Atmosphère (toujours rendue) */}
           <Atmosphere />
