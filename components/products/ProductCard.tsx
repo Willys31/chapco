@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import type { Product } from '@/data/products';
+import { getProductIcon } from '@/lib/product-icons';
 
 interface ProductCardProps {
   product: Product;
@@ -11,7 +12,7 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const [imageError, setImageError] = useState(false);
-  const Icon = product.icon;
+  const Icon = getProductIcon(product.slug);
 
   return (
     <Link href={`/produits/${product.slug}`} className="group block">
@@ -26,7 +27,7 @@ export function ProductCard({ product }: ProductCardProps) {
             onError={() => setImageError(true)}
           />
         ) : (
-          <PlaceholderImage Icon={Icon} name={product.name} />
+          <PlaceholderImage Icon={Icon} slug={product.slug} />
         )}
 
         {/* Overlay au hover */}
@@ -73,10 +74,10 @@ export function ProductCard({ product }: ProductCardProps) {
 // ─────────────────────────────────────────────────────────────
 function PlaceholderImage({
   Icon,
-  name,
+  slug,
 }: {
   Icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
-  name: string;
+  slug: string;
 }) {
   return (
     <div className="absolute inset-0 bg-gradient-to-br from-cream to-sage-100 flex flex-col items-center justify-center">
@@ -86,11 +87,11 @@ function PlaceholderImage({
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
-          <pattern id={`dots-${name}`} x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+          <pattern id={`dots-${slug}`} x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
             <circle cx="2" cy="2" r="1.5" fill="#1E2A5E" />
           </pattern>
         </defs>
-        <rect width="100%" height="100%" fill={`url(#dots-${name})`} />
+        <rect width="100%" height="100%" fill={`url(#dots-${slug})`} />
       </svg>
 
       {/* Icône centrale */}

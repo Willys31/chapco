@@ -1,6 +1,3 @@
-import type { LucideIcon } from 'lucide-react';
-import { Wheat, Droplet, Cookie, Flower2, Sprout, Apple, CircleDot, Nut } from 'lucide-react';
-
 export type ProductCategory = 'consommable' | 'non-consommable';
 
 export interface ProductPackaging {
@@ -20,7 +17,6 @@ export interface Product {
   categoryLabel: string;
   shortDescription: string;
   fullDescription: string;
-  icon: LucideIcon;
   image: string;
   imageAlt: string;
   benefits?: string[];
@@ -45,7 +41,6 @@ export const products: Product[] = [
     shortDescription: 'Semoule de manioc fermentée puis déshydratée.',
     fullDescription:
       "L'attiéké déshydraté est une semoule de manioc fermentée puis séchée. Plat emblématique ivoirien, il bénéficie d'une longue conservation et d'une facilité de transport qui en font un produit phare pour l'export, particulièrement plébiscité par la diaspora africaine à travers le monde.",
-    icon: Wheat,
     image: '/images/products/attieke.jpg',
     imageAlt: 'Attiéké déshydraté en sachet',
     benefits: [
@@ -69,7 +64,6 @@ export const products: Product[] = [
     shortDescription: 'Huile naturelle riche en bêta-carotène et vitamines A & E.',
     fullDescription:
       "L'huile rouge de palme est une huile alimentaire naturelle, particulièrement riche en bêta-carotène et en vitamines A & E. Elle est utilisée aussi bien en cuisine domestique que dans l'industrie agroalimentaire pour ses propriétés nutritionnelles et sa coloration caractéristique.",
-    icon: Droplet,
     image: '/images/products/huile-palme.jpg',
     imageAlt: 'Huile rouge de palme en bouteille',
     targetSegments: [
@@ -91,7 +85,6 @@ export const products: Product[] = [
     shortDescription: 'Farine obtenue à partir de manioc séché et broyé.',
     fullDescription:
       'La farine de manioc est obtenue à partir de tubercules de manioc séchés puis finement broyés. Naturellement sans gluten, elle constitue une alternative idéale aux farines traditionnelles et trouve sa place dans de nombreuses préparations industrielles et artisanales.',
-    icon: Cookie,
     image: '/images/products/farine-manioc.jpg',
     imageAlt: 'Farine de manioc en sachet',
     opportunities: [
@@ -113,7 +106,6 @@ export const products: Product[] = [
     shortDescription: 'Hibiscus rouge & blanc, naturel pour infusions et boissons.',
     fullDescription:
       "Les feuilles d'hibiscus, disponibles en variétés rouge et blanche, sont un produit naturel polyvalent. Séchées avec soin, elles sont prêtes à être utilisées en infusions, dans des boissons traditionnelles ou intégrées à des préparations industrielles alimentaires et cosmétiques.",
-    icon: Flower2,
     image: '/images/products/hibiscus-feuilles.jpg',
     imageAlt: "Feuilles d'hibiscus rouge et blanc",
     uses: ['Infusions', 'Boissons naturelles', 'Industrie alimentaire', 'Cosmétique'],
@@ -136,7 +128,6 @@ export const products: Product[] = [
       "Matière première essentielle pour les industries agroalimentaire, cosmétique et énergétique.",
     fullDescription:
       "La graine de palme provient du fruit du palmier à huile. Elle est une matière première essentielle pour l'industrie agroalimentaire, cosmétique et énergétique. Sa polyvalence en fait l'une des matières premières les plus stratégiques au monde.",
-    icon: Sprout,
     image: '/images/products/graine-palme.jpg',
     imageAlt: 'Graines de palme rouges',
     derivatives: [
@@ -168,7 +159,6 @@ export const products: Product[] = [
     shortDescription: 'Matière première polyvalente utilisée dans plusieurs industries.',
     fullDescription:
       "Le coco est une matière première polyvalente utilisée dans plusieurs industries grâce à ses nombreuses transformations possibles. De la pulpe à la fibre, en passant par l'eau et la coque, chaque partie du fruit trouve son application industrielle.",
-    icon: Apple,
     image: '/images/products/coco.jpg',
     imageAlt: 'Noix de coco fraîches',
     derivatives: [
@@ -206,7 +196,6 @@ export const products: Product[] = [
     shortDescription: 'Plante naturelle pour alimentation, cosmétique et boissons.',
     fullDescription:
       "L'hibiscus est une plante naturelle aux multiples usages, particulièrement appréciée pour la richesse de ses fleurs et de ses extraits. Utilisée dans l'alimentation, la cosmétique et les boissons, elle représente une matière première à fort potentiel.",
-    icon: Flower2,
     image: '/images/products/hibiscus.jpg',
     imageAlt: "Fleurs d'hibiscus séchées",
     derivatives: [
@@ -235,7 +224,6 @@ export const products: Product[] = [
       "Latex naturel indispensable pour les industries automobile, médicale et manufacturière.",
     fullDescription:
       "L'hévéa est une matière première issue du latex, utilisée pour produire du caoutchouc naturel, indispensable dans de nombreuses industries. De la production de pneus aux gants médicaux, en passant par le mobilier en bois d'hévéa, cette ressource est stratégique à l'échelle mondiale.",
-    icon: CircleDot,
     image: '/images/products/hevea.jpg',
     imageAlt: "Récolte de latex sur arbre d'hévéa",
     derivatives: [
@@ -270,7 +258,6 @@ export const products: Product[] = [
       'Noix africaine produisant un beurre végétal premium pour cosmétique et alimentaire.',
     fullDescription:
       "Le karité est une noix africaine utilisée pour produire du beurre végétal riche, très recherché dans les industries alimentaire et cosmétique. Symbole du savoir-faire africain, il est particulièrement plébiscité sur le marché cosmétique mondial pour ses vertus hydratantes et nourrissantes.",
-    icon: Nut,
     image: '/images/products/karite.jpg',
     imageAlt: 'Noix et beurre de karité',
     derivatives: [

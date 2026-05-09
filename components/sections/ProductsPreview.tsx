@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { FadeIn } from '@/components/animations/FadeIn';
 import { products } from '@/data/products';
+import { getProductIcon } from '@/lib/product-icons';
 
 const featuredProducts = products.slice(0, 4);
 
@@ -14,7 +15,7 @@ function ProductImage({
   product: (typeof products)[0];
 }) {
   const [error, setError] = useState(false);
-  const Icon = product.icon;
+  const Icon = getProductIcon(product.slug);
 
   if (!error) {
     return (
