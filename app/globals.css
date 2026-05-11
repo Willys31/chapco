@@ -101,3 +101,14 @@ h1, h2, h3, h4, h5, h6 {
     padding-right: 2rem;
   }
 }
+
+/* Form inputs */
+@layer components {
+  .form-input {
+    @apply w-full px-4 py-3 bg-white border border-sage-500/30 rounded-md text-ink placeholder:text-ink/40 transition-all duration-300;
+    @apply focus:outline-none focus:border-navy-700 focus:ring-2 focus:ring-navy-700/10;
+    @apply hover:border-sage-500/60;
+    font-weight: 300;
+    font-size: 0.9375rem;
+  }
+}
