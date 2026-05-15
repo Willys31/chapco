@@ -1,6 +1,10 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { ToasterProvider } from '@/components/providers/ToasterProvider';
+import { SmoothScrollProvider } from '@/components/providers/SmoothScrollProvider';
+import { CustomCursor } from '@/components/effects/CustomCursor';
+import { LoadingScreen } from '@/components/effects/LoadingScreen';
+import { PageTransition } from '@/components/effects/PageTransition';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 
@@ -43,9 +47,15 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-cream text-ink">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <LoadingScreen />
+        <CustomCursor />
+        <SmoothScrollProvider>
+          <Header />
+          <PageTransition>
+            <main className="flex-1">{children}</main>
+          </PageTransition>
+          <Footer />
+        </SmoothScrollProvider>
         <ToasterProvider />
       </body>
     </html>

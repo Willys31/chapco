@@ -1,6 +1,10 @@
 @import "tailwindcss";
 
 @theme inline {
+  /* === Animations === */
+  --animate-ticker: ticker 40s linear infinite;
+  --animate-gradient-shift: gradientShift 8s ease infinite;
+
   /* === CHAP & CO Color System === */
 
   /* Navy — couleur principale du logo */
@@ -33,19 +37,56 @@
   --font-sans: 'Inter', system-ui, sans-serif;
 }
 
-/* Smooth scroll */
+/* Keyframes */
+@keyframes ticker {
+  from { transform: translateX(0%); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50%       { background-position: 100% 50%; }
+}
+
+/* Smooth scroll natif (fallback Lenis) */
 html {
   scroll-behavior: smooth;
 }
 
+/* Custom cursor sur desktop */
+@media (hover: hover) {
+  * { cursor: none !important; }
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 /* Custom text selection */
 ::selection {
-  background-color: #1E2A5E;
-  color: #C8E0C8;
+  background-color: #A8C9A8;
+  color: #1E2A5E;
+}
+
+/* Scrollbar custom */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #FAF8F3; }
+::-webkit-scrollbar-thumb { background: #1E2A5E; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #5A8A5A; }
+
+/* Focus visible accessible */
+*:focus-visible {
+  outline: 2px solid #A8C9A8;
+  outline-offset: 4px;
 }
 
 /* Body defaults */
 body {
+  position: relative;
   background: #FAF8F3;
   color: #1A1A2E;
   font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
@@ -76,6 +117,12 @@ h1, h2, h3, h4, h5, h6 {
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(200, 224, 200, 0.1);
+}
+
+/* Gradient animated utility */
+.gradient-animated {
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease infinite;
 }
 
 /* Container base */
