@@ -100,13 +100,13 @@ export function ProductCTA({ product }: { product: Product }) {
                   </a>
 
                   <a
-                    href={`mailto:Cmessou@chapco.ci?subject=${encodeURIComponent('Demande info ' + product.name)}`}
+                    href={`mailto:cmessou@chapco.ci?subject=${encodeURIComponent('Demande info ' + product.name)}`}
                     className="group flex items-center gap-3 hover:text-sage-300 transition-colors"
                   >
                     <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-sage-300/20 transition-colors shrink-0">
                       <Mail className="w-4 h-4" />
                     </div>
-                    <span className="font-light">Cmessou@chapco.ci</span>
+                    <span className="font-light">cmessou@chapco.ci</span>
                   </a>
                 </div>
 

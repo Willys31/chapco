@@ -78,11 +78,11 @@ export function Founder() {
                   <span className="font-light">+225 07 04 76 76 76</span>
                 </a>
                 <a
-                  href="mailto:Cmessou@chapco.ci"
+                  href="mailto:cmessou@chapco.ci"
                   className="flex items-center gap-3 text-navy-700 hover:text-sage-700 transition-colors"
                 >
                   <Mail className="w-4 h-4 shrink-0" />
-                  <span className="font-light">Cmessou@chapco.ci</span>
+                  <span className="font-light">cmessou@chapco.ci</span>
                 </a>
               </div>
             </FadeIn>

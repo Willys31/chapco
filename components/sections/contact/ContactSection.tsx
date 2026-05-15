@@ -55,7 +55,7 @@ export function ContactSection() {
                   </a>
 
                   <a
-                    href="mailto:Cmessou@chapco.ci"
+                    href="mailto:cmessou@chapco.ci"
                     className="flex items-start gap-3 group"
                   >
                     <div className="w-9 h-9 rounded-full bg-white border border-sage-500/30 flex items-center justify-center shrink-0 group-hover:bg-sage-500 group-hover:border-sage-500 transition-colors">
@@ -64,7 +64,7 @@ export function ContactSection() {
                     <div>
                       <p className="text-xs text-ink/40 uppercase tracking-[0.15em] mb-0.5">Email</p>
                       <p className="text-sm font-medium text-navy-700 group-hover:text-sage-700 transition-colors break-all">
-                        Cmessou@chapco.ci
+                        cmessou@chapco.ci
                       </p>
                     </div>
                   </a>

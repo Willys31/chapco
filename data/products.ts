@@ -219,7 +219,7 @@ export const products: Product[] = [
     slug: 'hevea',
     name: 'Hévéa',
     category: 'non-consommable',
-    categoryLabel: 'Caoutchouc naturel',
+    categoryLabel: 'Matière première',
     shortDescription:
       "Latex naturel indispensable pour les industries automobile, médicale et manufacturière.",
     fullDescription:
@@ -253,7 +253,7 @@ export const products: Product[] = [
     slug: 'karite',
     name: 'Karité',
     category: 'non-consommable',
-    categoryLabel: 'Beurre végétal',
+    categoryLabel: 'Matière première',
     shortDescription:
       'Noix africaine produisant un beurre végétal premium pour cosmétique et alimentaire.',
     fullDescription:

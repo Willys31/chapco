@@ -11,7 +11,7 @@ export const company = {
   contact: {
     name: 'Cedric Messou',
     phone: '+225 07 04 76 76 76',
-    email: 'Cmessou@chapco.ci',
+    email: 'cmessou@chapco.ci',
   },
   navigation: [
     { label: 'Accueil', href: '/' },

@@ -7,8 +7,9 @@ import { company } from '@/data/company';
 import { ArrowsBackground } from '@/components/animations/ArrowsBackground';
 import { Container } from '@/components/ui/Container';
 
+const currentYear = new Date().getFullYear();
+
 export function Footer() {
-  const currentYear = new Date().getFullYear();
 
   const footerProducts = [
     "Attiéké déshydraté",
@@ -106,12 +107,13 @@ export function Footer() {
                 </a>
                 <a
                   href={`mailto:${company.contact.email}`}
+                  suppressHydrationWarning
                   className="flex items-center gap-3 text-gray-400 hover:text-sage-300 transition-colors duration-200 text-sm group"
                 >
                   <div className="w-8 h-8 rounded-lg bg-navy-700 group-hover:bg-sage-700 flex items-center justify-center transition-colors duration-200 shrink-0">
                     <Mail size={14} />
                   </div>
-                  <span>{company.contact.email}</span>
+                  <span suppressHydrationWarning>{company.contact.email}</span>
                 </a>
               </div>
             </div>
@@ -122,7 +124,7 @@ export function Footer() {
         <div className="border-t border-white/10">
           <Container className="py-5">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-              <p className="text-gray-500 text-xs">
+              <p className="text-gray-500 text-xs" suppressHydrationWarning>
                 © {currentYear} {company.name}. Tous droits réservés.
               </p>
               <div className="flex items-center gap-4 text-xs text-gray-500">
