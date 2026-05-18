@@ -1,5 +1,6 @@
-import type { Metadata } from 'next';
 import './globals.css';
+import { generateMetadata as generateSiteMetadata } from '@/lib/seo';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { ToasterProvider } from '@/components/providers/ToasterProvider';
 import { SmoothScrollProvider } from '@/components/providers/SmoothScrollProvider';
 import { CustomCursor } from '@/components/effects/CustomCursor';
@@ -8,28 +9,7 @@ import { PageTransition } from '@/components/effects/PageTransition';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 
-export const metadata: Metadata = {
-  title: 'CHAP & CO — Négoce et exportation de matières premières agricoles | Abidjan',
-  description:
-    "CHAP & CO, entreprise ivoirienne spécialisée dans l'exportation de matières premières agricoles et alimentaires d'Afrique de l'Ouest vers le monde. Attiéké, huile de palme, karité, hévéa, hibiscus, coco.",
-  keywords: [
-    'négoce agricole',
-    "export Côte d'Ivoire",
-    'matières premières Afrique',
-    'attiéké',
-    'karité',
-    'huile de palme',
-    'hévéa',
-    'hibiscus',
-  ],
-  openGraph: {
-    title: 'CHAP & CO — De la terre africaine aux marchés du monde',
-    description:
-      'Négoce et exportation de matières premières agricoles & alimentaires depuis Abidjan',
-    locale: 'fr_FR',
-    type: 'website',
-  },
-};
+export const metadata = generateSiteMetadata({});
 
 export default function RootLayout({
   children,
@@ -39,6 +19,7 @@ export default function RootLayout({
   return (
     <html lang="fr" className="h-full antialiased">
       <head>
+        <JsonLd />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
@@ -47,12 +28,18 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-cream text-ink">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[10001] focus:bg-navy-700 focus:text-white focus:px-6 focus:py-3 focus:rounded-md focus:font-medium focus:text-sm"
+        >
+          Aller au contenu principal
+        </a>
         <LoadingScreen />
         <CustomCursor />
         <SmoothScrollProvider>
           <Header />
           <PageTransition>
-            <main className="flex-1">{children}</main>
+            <main id="main-content" className="flex-1">{children}</main>
           </PageTransition>
           <Footer />
         </SmoothScrollProvider>

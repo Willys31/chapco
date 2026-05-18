@@ -14,7 +14,8 @@ export function CustomCursor() {
   const y = useSpring(cursorY, springCfg);
 
   useEffect(() => {
-    if (window.matchMedia('(hover: none)').matches) return;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (window.matchMedia('(hover: none)').matches || prefersReducedMotion) return;
     setIsMobile(false);
 
     const onMove = (e: MouseEvent) => {
