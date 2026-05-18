@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { FadeIn } from '@/components/animations/FadeIn';
 import { ArrowsBackground } from '@/components/animations/ArrowsBackground';
 import { ShieldCheck } from 'lucide-react';
@@ -19,13 +18,6 @@ export function QualityHero() {
 
           {/* Texte */}
           <div className="lg:col-span-7 space-y-8">
-            <FadeIn>
-              <nav className="flex items-center gap-2 text-xs text-white/40 tracking-[0.2em] uppercase">
-                <Link href="/" className="hover:text-white/70 transition-colors">Accueil</Link>
-                <span>/</span>
-                <span className="text-sage-300">Qualité & Conformité</span>
-              </nav>
-            </FadeIn>
 
             <FadeIn delay={0.1}>
               <p className="text-xs tracking-[0.3em] uppercase text-sage-300">

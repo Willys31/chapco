@@ -85,13 +85,7 @@ export function Hero() {
       >
         {/* TEXT column */}
         <div className="order-2 lg:order-1 text-center lg:text-left">
-          <div className="hero-eyebrow inline-flex items-center gap-3 mb-8">
-            <span className="w-8 h-px bg-sage-300/50" />
-            <span className="text-[10px] tracking-[0.4em] uppercase text-sage-300/70">
-              Abidjan — Côte d'Ivoire
-            </span>
-          </div>
-
+          
           <h1 className="text-5xl md:text-6xl lg:text-[5.5rem] font-light tracking-tight leading-[1.06] text-white mb-8">
             <span className="hero-line block overflow-hidden"><span className="block">Le meilleur</span></span>
             <span className="hero-line block overflow-hidden">

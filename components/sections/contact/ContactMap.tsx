@@ -28,7 +28,7 @@ export function ContactMap() {
             {/* Google Maps embed */}
             <div className="aspect-[16/7] bg-sage-100">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d254508.55921777986!2d-4.082692!3d5.359952!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfc1ea5311959121%3A0x3fe70ddce19221a6!2sAbidjan%2C%20C%C3%B4te%20d&#39;Ivoire!5e0!3m2!1sfr!2sfr!4v1699999999999!5m2!1sfr!2sfr"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3972.3571671113777!2d-3.994319425243123!3d5.362360994616423!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfc1eb42e4bb618d%3A0x25b4aa074d253b4b!2sElite%20Experience!5e0!3m2!1sfr!2sci!4v1779105697456!5m2!1sfr!2sci"
                 width="100%"
                 height="100%"
                 style={{ border: 0, display: 'block' }}
@@ -56,7 +56,7 @@ export function ContactMap() {
               </p>
 
               <a
-                href="https://maps.google.com/?q=Abidjan,Cote+d'Ivoire"
+                href="https://www.google.com/maps/place/Elite+Experience/@5.362361,-3.9943194,17z/data=!3m1!4b1!4m6!3m5!1s0xfc1eb42e4bb618d:0x25b4aa074d253b4b!8m2!3d5.362361!4d-3.9917445!16s%2Fg%2F11v66j_l_j?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-xs text-sage-700 font-medium hover:text-navy-700 transition-colors"

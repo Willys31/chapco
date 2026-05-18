@@ -35,7 +35,7 @@ export function Footer() {
                 <LogoText />
               </div>
               <p className="text-sage-300 text-sm leading-relaxed mb-4 font-medium italic">
-                "{company.tagline}"
+                &quot;{company.tagline}&quot;
               </p>
               <div className="flex items-center gap-2 text-gray-400 text-sm">
                 <MapPin size={14} className="text-sage-500 shrink-0" />
@@ -146,14 +146,12 @@ export function Footer() {
 
 function LogoText() {
   return (
-    <div className="bg-white rounded-xl px-3 py-2 inline-block">
-      <Image
-        src="/CHAP LOGO.png"
-        alt="CHAP & CO"
-        width={110}
-        height={51}
-        className="h-10 w-auto object-contain"
-      />
-    </div>
+    <Image
+      src="/LOGO CHAP foot.png"
+      alt="CHAP & CO"
+      width={160}
+      height={60}
+      className="h-12 w-auto object-contain"
+    />
   );
 }

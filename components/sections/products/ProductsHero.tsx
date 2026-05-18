@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { FadeIn } from '@/components/animations/FadeIn';
 import { ArrowsBackground } from '@/components/animations/ArrowsBackground';
 
@@ -16,17 +15,6 @@ export function ProductsHero() {
       </div>
 
       <div className="relative z-10 max-w-4xl mx-auto px-6 lg:px-12 w-full">
-        {/* Breadcrumb */}
-        <FadeIn>
-          <nav className="flex items-center gap-2 text-xs text-white/40 tracking-[0.2em] uppercase mb-12">
-            <Link href="/" className="hover:text-white/70 transition-colors">
-              Accueil
-            </Link>
-            <span>/</span>
-            <span className="text-sage-300">Produits</span>
-          </nav>
-        </FadeIn>
-
         {/* Eyebrow */}
         <FadeIn delay={0.1}>
           <p className="text-xs tracking-[0.3em] uppercase text-sage-300 mb-6">

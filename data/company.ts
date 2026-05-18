@@ -1,8 +1,8 @@
 export const company = {
   name: 'CHAP & CO',
   legalName: 'CHAP IMPORT & CO',
-  tagline: 'De la terre africaine aux marchés du monde',
-  description: 'Négoce et exportation de matières premières agricoles & alimentaires',
+  tagline: 'Du terroir africain aux marchés du monde',
+  description: 'Négoce et exportation de matières premières, agricoles & alimentaires',
   foundedYear: 2023,
   location: {
     city: 'Abidjan',

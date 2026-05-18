@@ -5,8 +5,8 @@ import { FadeIn } from '@/components/animations/FadeIn';
 
 const stats = [
   {
-    value: 2023,
-    label: 'Année de création',
+    value: 3,
+    label: 'Années d\'expérience',
     suffix: '',
     description: 'Une jeune entreprise ambitieuse',
   },

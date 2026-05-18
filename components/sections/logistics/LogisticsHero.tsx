@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { FadeIn } from '@/components/animations/FadeIn';
 import { ArrowsBackground } from '@/components/animations/ArrowsBackground';
 import { Ship } from 'lucide-react';
@@ -18,14 +17,7 @@ export function LogisticsHero() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
 
           <div className="lg:col-span-7 space-y-8">
-            <FadeIn>
-              <nav className="flex items-center gap-2 text-xs text-white/40 tracking-[0.2em] uppercase">
-                <Link href="/" className="hover:text-white/70 transition-colors">Accueil</Link>
-                <span>/</span>
-                <span className="text-sage-300">Logistique Export</span>
-              </nav>
-            </FadeIn>
-
+            
             <FadeIn delay={0.1}>
               <p className="text-xs tracking-[0.3em] uppercase text-sage-300">
                 Logistique Export
