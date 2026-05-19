@@ -83,7 +83,7 @@ export async function POST(request: Request) {
     const resend = new Resend(process.env.RESEND_API_KEY);
     const { data, error } = await resend.emails.send({
       from: 'CHAP & CO <noreply@chapco.ci>',
-      to: ['cmessou@chapco.ci'],
+      to: ['cmessou@gmail.com'],
       replyTo: validated.email,
       subject: `[${validated.requestType.toUpperCase()}] Nouvelle demande de ${validated.company}`,
       html: buildEmailHtml(validated),
