@@ -1,46 +1,11 @@
-import { Sprout, BarChart3, ShieldCheck, Search, FileCheck, Ship } from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
+'use client';
+
+import Image from 'next/image';
+import Link from 'next/link';
+import { ShieldCheck, ArrowRight } from 'lucide-react';
 import { FadeIn } from '@/components/animations/FadeIn';
 import { ArrowsBackground } from '@/components/animations/ArrowsBackground';
 
-const guarantees: { icon: LucideIcon; title: string; description: string }[] = [
-  {
-    icon: Sprout,
-    title: 'Sélection rigoureuse des filières',
-    description:
-      'Choix méticuleux des producteurs et des terroirs pour garantir une qualité irréprochable.',
-  },
-  {
-    icon: BarChart3,
-    title: 'Maîtrise des volumes',
-    description:
-      'Gestion précise des quantités selon vos besoins, du conditionnement détail au vrac industriel.',
-  },
-  {
-    icon: ShieldCheck,
-    title: 'Contrôle qualité avant expédition',
-    description:
-      'Vérifications systématiques pour assurer la conformité aux standards internationaux.',
-  },
-  {
-    icon: Search,
-    title: 'Traçabilité des produits',
-    description:
-      'Suivi complet de la ferme au conteneur, garantissant transparence et confiance.',
-  },
-  {
-    icon: FileCheck,
-    title: 'Documentation export complète',
-    description:
-      "Certificats phytosanitaires, d'origine, analyses microbiologiques — tout est fourni.",
-  },
-  {
-    icon: Ship,
-    title: 'Logistique maritime sécurisée',
-    description:
-      'Transport en conteneurs protégés, planification précise selon vos contrats.',
-  },
-];
 
 export function Guarantees() {
   return (
@@ -64,34 +29,78 @@ export function Guarantees() {
           </p>
         </FadeIn>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {guarantees.map((guarantee, index) => {
-            const Icon = guarantee.icon;
-            return (
-              <FadeIn key={guarantee.title} delay={index * 0.08}>
-                <div className="group relative p-8 lg:p-10 border border-white/10 rounded-sm hover:border-sage-500/50 transition-all duration-500 h-full">
-                  <div className="absolute inset-0 bg-gradient-to-br from-sage-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-sm" />
-                  <div className="absolute top-6 right-6 text-7xl font-light text-white/5 group-hover:text-sage-500/20 transition-colors select-none leading-none">
-                    0{index + 1}
-                  </div>
+        {/* Image hero cinématographique */}
+        <FadeIn delay={0.3}>
+          <div className="relative w-full aspect-[16/9] max-w-5xl mx-auto my-16 overflow-hidden rounded-sm group">
+            {/* Fallback élégant (toujours présent en arrière-plan) */}
+            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-navy-800 via-navy-900 to-navy-800">
+              <div className="absolute inset-0 opacity-5">
+                <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <pattern id="hero-grid" width="60" height="60" patternUnits="userSpaceOnUse">
+                      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#C8E0C8" strokeWidth="1" />
+                    </pattern>
+                  </defs>
+                  <rect width="100%" height="100%" fill="url(#hero-grid)" />
+                </svg>
+              </div>
+              <div className="relative flex flex-col items-center gap-3 z-10">
+                <ShieldCheck className="w-12 h-12 text-sage-500/40" strokeWidth={1} />
+                <p className="text-xs uppercase tracking-[0.3em] text-sage-500/40">Image à venir</p>
+              </div>
+            </div>
 
-                  <div className="relative mb-8">
-                    <div className="w-14 h-14 rounded-full bg-sage-500/10 border border-sage-500/30 flex items-center justify-center group-hover:bg-sage-500/20 group-hover:scale-110 transition-all duration-500">
-                      <Icon className="w-6 h-6 text-sage-300" strokeWidth={1.5} />
-                    </div>
-                  </div>
+            {/* Image principale */}
+            <Image
+              src="/images/engagements/hero-engagements.jpg"
+              alt="Nos engagements qualité - CHAP & CO"
+              fill
+              className="object-cover transition-transform duration-1000 group-hover:scale-105"
+              sizes="(max-width: 1024px) 100vw, 1280px"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+              }}
+            />
 
-                  <h3 className="relative text-xl font-medium text-white mb-4 tracking-tight">
-                    {guarantee.title}
-                  </h3>
-                  <p className="relative text-sm text-white/60 font-light leading-relaxed">
-                    {guarantee.description}
-                  </p>
-                </div>
-              </FadeIn>
-            );
-          })}
-        </div>
+            {/* Overlay dégradé */}
+            <div className="absolute inset-0 bg-gradient-to-t from-navy-900/60 via-transparent to-transparent pointer-events-none" />
+
+            {/* Texte flottant bas-gauche */}
+            <div className="absolute bottom-8 left-8 right-8 z-10">
+              <div className="max-w-md">
+                <p className="text-xs tracking-[0.3em] uppercase text-sage-300 mb-2">
+                  Vue d&apos;ensemble
+                </p>
+                <p className="text-lg md:text-xl font-light text-white leading-snug">
+                  De la ferme au conteneur,
+                  <br />
+                  chaque maillon est maîtrisé.
+                </p>
+              </div>
+            </div>
+
+            {/* Flèches décoratives */}
+            <div className="absolute top-6 right-6 opacity-20 pointer-events-none">
+              <ArrowRight className="w-8 h-8 text-sage-300" strokeWidth={1} />
+            </div>
+          </div>
+        </FadeIn>
+
+        {/* CTA vers la page dédiée */}
+        <FadeIn delay={0.2}>
+          <div className="mt-16 text-center">
+            <Link
+              href="/engagements"
+              className="group inline-flex items-center gap-3 px-8 py-4 bg-navy-700 text-white text-lg font-semibold rounded-xl hover:bg-navy-900 hover:scale-[1.02] shadow-md hover:shadow-xl transition-all duration-300"
+            >
+              Découvrir nos engagements en détail
+              <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
+            <p className="mt-4 text-sm text-white/50 font-light">
+              Plongez dans chaque promesse, étape par étape.
+            </p>
+          </div>
+        </FadeIn>
       </div>
     </section>
   );
