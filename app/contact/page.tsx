@@ -8,7 +8,7 @@ import { ContactCTA } from '@/components/sections/contact/ContactCTA';
 export const metadata: Metadata = {
   title: 'Contact | CHAP & CO — Devis, échantillons, partenariats',
   description:
-    "Contactez CHAP & CO pour un devis, un échantillon ou un partenariat. Cedric Messou — +225 07 04 76 76 76 — Cmessou@chapco.ci. Réponse sous 48h ouvrées.",
+    "Contactez CHAP & CO pour un devis, un échantillon ou un partenariat. Cedric Messou — +225 07 04 76 76 76 — cmessou@chapco.ci. Réponse sous 48h ouvrées.",
 };
 
 export default function ContactPage() {
