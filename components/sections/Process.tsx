@@ -1,83 +1,248 @@
-import { FadeIn } from '@/components/animations/FadeIn';
+'use client';
 
-const steps = [
-  {
-    number: '01',
-    title: 'Sourcing',
-    description:
-      "Identification et sélection rigoureuse des producteurs partenaires en Afrique de l'Ouest.",
-  },
-  {
-    number: '02',
-    title: 'Contrôle qualité',
-    description: 'Inspection physique, analyses microbiologiques et tests de conformité.',
-  },
-  {
-    number: '03',
-    title: 'Conditionnement',
-    description: 'Mise en sachets, conteneurs ou vrac selon vos spécifications.',
-  },
-  {
-    number: '04',
-    title: 'Documentation',
-    description:
-      "Certificats phytosanitaires, d'origine, fiches techniques — dossier complet.",
-  },
-  {
-    number: '05',
-    title: 'Export FOB / CIF',
-    description:
-      "Expédition depuis le port d'Abidjan vers Marseille, Anvers, Rotterdam ou autres.",
-  },
-  {
-    number: '06',
-    title: 'Livraison',
-    description:
-      "Suivi maritime jusqu'à votre port de destination, dans les délais convenus.",
-  },
-];
+import { useRef, useState, useEffect, forwardRef } from 'react';
+import Image from 'next/image';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { FadeIn } from '@/components/animations/FadeIn';
+import { processSteps, type ProcessStep } from '@/data/process';
+import type { LucideIcon } from 'lucide-react';
+
+interface Point {
+  x: number;
+  y: number;
+}
+
+function buildSerpentinePath(points: Point[]): string {
+  if (points.length < 2) return '';
+  let d = `M ${points[0].x} ${points[0].y}`;
+  for (let i = 0; i < points.length - 1; i++) {
+    const p1 = points[i];
+    const p2 = points[i + 1];
+    const midY = (p1.y + p2.y) / 2;
+    d += ` C ${p1.x} ${midY}, ${p2.x} ${midY}, ${p2.x} ${p2.y}`;
+  }
+  return d;
+}
 
 export function Process() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [svgPath, setSvgPath] = useState('');
+  const [svgDims, setSvgDims] = useState({ width: 0, height: 0 });
+  const [connectionPoints, setConnectionPoints] = useState<Point[]>([]);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start 80%', 'end 20%'],
+  });
+  const pathLength = useTransform(scrollYProgress, [0, 1], [0, 1]);
+
+  useEffect(() => {
+    const buildPath = () => {
+      const container = containerRef.current;
+      if (!container) return;
+      if (stepRefs.current.some((r) => !r)) return;
+
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      setSvgDims({ width: w, height: h });
+
+      const containerRect = container.getBoundingClientRect();
+      const points: Point[] = stepRefs.current.map((ref, i) => {
+        const rect = ref!.getBoundingClientRect();
+        const y = rect.top - containerRect.top + rect.height * 0.15;
+        const x = i % 2 === 0 ? 40 : w - 40;
+        return { x, y };
+      });
+
+      setConnectionPoints(points);
+      setSvgPath(buildSerpentinePath(points));
+    };
+
+    buildPath();
+    window.addEventListener('resize', buildPath);
+    return () => window.removeEventListener('resize', buildPath);
+  }, []);
+
   return (
-    <section className="py-24 lg:py-32 bg-cream">
+    <section className="py-24 lg:py-32 bg-cream overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <FadeIn className="text-center mb-20">
-          <p className="text-xs tracking-[0.3em] uppercase text-sage-700 mb-4">
-            Notre processus
-          </p>
-          <h2 className="text-4xl md:text-5xl font-light text-navy-700 tracking-tight">
+        <FadeIn className="text-center mb-20 max-w-3xl mx-auto">
+          <p className="text-xs tracking-[0.3em] uppercase text-sage-700 mb-4">Notre processus</p>
+          <h2 className="text-4xl md:text-5xl font-light text-navy-700 tracking-tight leading-[1.15]">
             Six étapes, <em className="italic text-forest-500">une promesse</em>
           </h2>
         </FadeIn>
 
-        <div className="relative">
-          {/* Ligne connectrice — desktop uniquement */}
-          <div className="hidden lg:block absolute top-8 left-0 right-0 h-px bg-gradient-to-r from-transparent via-sage-500 to-transparent" />
+        <div ref={containerRef} className="relative">
+          {svgPath && svgDims.width > 0 && (
+            <svg
+              className="hidden lg:block absolute inset-0 pointer-events-none z-0 overflow-visible"
+              width={svgDims.width}
+              height={svgDims.height}
+              viewBox={`0 0 ${svgDims.width} ${svgDims.height}`}
+            >
+              {/* Fond statique gris pâle */}
+              <path
+                d={svgPath}
+                fill="none"
+                stroke="rgba(168, 201, 168, 0.2)"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+              {/* Tracé animé au scroll */}
+              <motion.path
+                d={svgPath}
+                fill="none"
+                stroke="#A8C9A8"
+                strokeWidth="2"
+                strokeLinecap="round"
+                style={{ pathLength }}
+              />
+              {/* Points de connexion */}
+              {connectionPoints.map((p, i) => (
+                <g key={i}>
+                  <circle cx={p.x} cy={p.y} r="10" fill="white" stroke="#A8C9A8" strokeWidth="2" />
+                  <circle cx={p.x} cy={p.y} r="5" fill="#A8C9A8" />
+                </g>
+              ))}
+            </svg>
+          )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 lg:gap-6">
-            {steps.map((step, index) => (
-              <FadeIn key={step.number} delay={index * 0.1}>
-                <div className="relative text-center group">
-                  <div className="relative mx-auto mb-6 w-16 h-16">
-                    <div className="absolute inset-0 bg-cream border-2 border-sage-500 rounded-full group-hover:bg-sage-500 transition-colors duration-500" />
-                    <div className="relative h-full flex items-center justify-center">
-                      <span className="text-lg font-medium text-navy-700 group-hover:text-white transition-colors duration-500">
-                        {step.number}
-                      </span>
-                    </div>
-                  </div>
-                  <h3 className="text-base font-medium text-navy-700 mb-3 tracking-tight">
-                    {step.title}
-                  </h3>
-                  <p className="text-sm text-ink/60 font-light leading-relaxed">
-                    {step.description}
-                  </p>
-                </div>
-              </FadeIn>
+          <div className="space-y-20 lg:space-y-32">
+            {processSteps.map((step, index) => (
+              <ProcessCard
+                key={step.number}
+                ref={(el) => {
+                  stepRefs.current[index] = el;
+                }}
+                step={step}
+                index={index}
+                isReversed={index % 2 === 1}
+              />
             ))}
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+// ─────────────────────────────────────────────
+// Carte d'une étape
+// ─────────────────────────────────────────────
+interface ProcessCardProps {
+  step: ProcessStep;
+  index: number;
+  isReversed: boolean;
+}
+
+const ProcessCard = forwardRef<HTMLDivElement, ProcessCardProps>(function ProcessCard(
+  { step, index, isReversed },
+  ref
+) {
+  const [imageError, setImageError] = useState(false);
+  const Icon = step.icon;
+
+  return (
+    <div
+      ref={ref}
+      className={`relative grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-0 items-center ${
+        isReversed ? 'lg:[&>*:first-child]:order-2' : ''
+      }`}
+    >
+      {/* IMAGE */}
+      <FadeIn direction={isReversed ? 'right' : 'left'}>
+        <div className={`relative z-10 ${isReversed ? 'lg:pl-16' : 'lg:pr-16'}`}>
+          <div className="relative aspect-[16/10] overflow-hidden rounded-sm group">
+            {!imageError ? (
+              <Image
+                src={step.image}
+                alt={step.imageAlt}
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                onError={() => setImageError(true)}
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            ) : (
+              <PlaceholderProcessImage Icon={Icon} number={step.number} />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-navy-900/20 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute bottom-4 left-4">
+              <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-3 py-1.5">
+                <span className="text-xs tracking-[0.25em] uppercase text-white font-medium">
+                  {step.number}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </FadeIn>
+
+      {/* TEXTE */}
+      <FadeIn delay={0.2} direction={isReversed ? 'left' : 'right'}>
+        <div
+          className={`flex flex-col justify-center z-10 ${
+            isReversed ? 'lg:pr-16' : 'lg:pl-16'
+          }`}
+        >
+          <div className="flex items-center gap-4 mb-6">
+            <div className="w-12 h-12 rounded-full bg-sage-500/10 border border-sage-500/30 flex items-center justify-center flex-shrink-0">
+              <Icon className="w-5 h-5 text-forest-500" strokeWidth={1.5} />
+            </div>
+            <span className="text-xs tracking-[0.25em] uppercase text-sage-700 font-medium">
+              Étape {step.number}
+            </span>
+          </div>
+
+          <h3 className="text-3xl lg:text-4xl font-light text-navy-700 tracking-tight leading-[1.2] mb-5">
+            {step.title}
+          </h3>
+
+          <p className="text-base lg:text-lg text-ink/70 font-light leading-relaxed max-w-md">
+            {step.description}
+          </p>
+        </div>
+      </FadeIn>
+    </div>
+  );
+});
+
+// ─────────────────────────────────────────────
+// Placeholder si image manquante
+// ─────────────────────────────────────────────
+function PlaceholderProcessImage({
+  Icon,
+  number,
+}: {
+  Icon: LucideIcon;
+  number: string;
+}) {
+  return (
+    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-sage-100 via-cream to-sage-100">
+      <div className="absolute inset-0 opacity-10">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id={`process-grid-${number}`} width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#5A8A5A" strokeWidth="1" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill={`url(#process-grid-${number})`} />
+        </svg>
+      </div>
+
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <span className="text-[160px] font-light text-sage-500/10 tracking-tighter leading-none">
+          {number}
+        </span>
+      </div>
+
+      <div className="relative flex flex-col items-center gap-3 z-10">
+        <div className="w-20 h-20 rounded-full bg-white/70 border border-sage-500/30 flex items-center justify-center backdrop-blur-sm">
+          <Icon className="w-10 h-10 text-forest-500" strokeWidth={1} />
+        </div>
+        <p className="text-xs uppercase tracking-[0.3em] text-sage-700/60">Image à venir</p>
+      </div>
+    </div>
   );
 }
