@@ -87,5 +87,8 @@ export function generateMetadata({
         'max-snippet': -1,
       },
     },
+    verification: {
+      google: 'pQ8ImpMUq0Gi7HZ3R_oZPu05Mc5B9b7aGKlWG_JWI_k',
+    },
   };
 }
