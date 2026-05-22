@@ -6,7 +6,7 @@ export const siteConfig = {
   url: 'https://chapco.ci',
   ogImage: '/og-image.jpg',
   description:
-    "CHAP & CO, entreprise ivoirienne spécialisée dans la structuration et l'exportation de matières premières agricoles & alimentaires d'Afrique de l'Ouest vers le monde. Attiéké, huile de palme, karité, hévéa, hibiscus, coco.",
+    "CHAP & CO, négoce et exportation de matières premières agricoles d'Afrique de l'Ouest. Attiéké, karité, huile de palme, hévéa. Devis sous 48h.",
   founder: 'Cedric Messou',
   foundedYear: 2023,
   contact: {
@@ -21,6 +21,10 @@ export const siteConfig = {
   keywords: [
     "négoce agricole Côte d'Ivoire",
     'exportation matières premières Afrique',
+    "négoce matières premières agricoles Côte d'Ivoire",
+    "exportateur produits agricoles Afrique de l'Ouest",
+    'structuration export Afrique',
+    'fournisseur matières premières Abidjan',
     'fournisseur attiéké export',
     'huile de palme rouge export',
     'beurre de karité Afrique',
@@ -28,10 +32,12 @@ export const siteConfig = {
     'feuilles hibiscus export',
     'farine manioc sans gluten',
     'graine de palme industrielle',
-    'coco bio Afrique de l Ouest',
+    "coco bio Afrique de l'Ouest",
     'export FOB Abidjan',
     'CIF Marseille Anvers Rotterdam',
     'CHAP IMPORT CO',
+    'traçabilité produits agricoles',
+    'analyses microbiologiques export',
   ],
 };
 

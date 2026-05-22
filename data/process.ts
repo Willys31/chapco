@@ -27,7 +27,7 @@ export const processSteps: ProcessStep[] = [
       'Inspection physique, analyses microbiologiques et tests de conformité pour garantir des standards irréprochables.',
     icon: ShieldCheck,
     image: '/images/process/controle-qualite.jpg',
-    imageAlt: 'Contrôle qualité des produits',
+    imageAlt: 'Contrôle qualité matières premières agricoles export',
   },
   {
     number: '03',
@@ -36,7 +36,7 @@ export const processSteps: ProcessStep[] = [
       'Mise en sachets, conteneurs ou vrac industriel selon vos spécifications et vos canaux de distribution.',
     icon: Package,
     image: '/images/process/conditionnement.jpg',
-    imageAlt: 'Conditionnement des produits',
+    imageAlt: 'Conditionnement matières premières agricoles export',
   },
   {
     number: '04',
@@ -45,7 +45,7 @@ export const processSteps: ProcessStep[] = [
       "Certificats phytosanitaires, d'origine, analyses et fiches techniques — un dossier export complet pour chaque expédition.",
     icon: FileCheck,
     image: '/images/process/documentation.jpg',
-    imageAlt: 'Documentation export',
+    imageAlt: "Documentation export certificats phytosanitaires Côte d'Ivoire",
   },
   {
     number: '05',
@@ -63,6 +63,6 @@ export const processSteps: ProcessStep[] = [
       "Suivi maritime jusqu'à votre port de destination, dans les délais convenus, en toute sérénité.",
     icon: MapPin,
     image: '/images/process/livraison.jpg',
-    imageAlt: 'Livraison au port de destination',
+    imageAlt: 'Livraison conteneur port européen Marseille Anvers',
   },
 ];

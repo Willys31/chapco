@@ -6,7 +6,7 @@ import { ProductsCTA } from '@/components/sections/products/ProductsCTA';
 export const metadata = {
   title: 'Nos produits | CHAP & CO — Matières premières agricoles & alimentaires',
   description:
-    "Découvrez les 9 produits de CHAP & CO : attiéké déshydraté, huile rouge de palme, farine de manioc, hibiscus, karité, hévéa, coco, graine de palme. Export Afrique vers le monde.",
+    "Catalogue matières premières agricoles export : attiéké, karité, huile de palme, hévéa, hibiscus. Certifiés d'Afrique de l'Ouest. Devis.",
 };
 
 export default function ProductsPage() {

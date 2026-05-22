@@ -25,9 +25,12 @@ export async function generateMetadata({
     return { title: 'Produit non trouvé | CHAP & CO' };
   }
 
+  const baseDesc = product.shortDescription.replace(/\.$/, '');
+  const seoDescription = `${product.name} à l'export depuis la Côte d'Ivoire. ${baseDesc}. Conditionnement sur mesure. Devis sous 48h.`;
+
   return {
     title: `${product.name} | CHAP & CO — ${product.categoryLabel}`,
-    description: product.shortDescription,
+    description: seoDescription,
     openGraph: {
       title: `${product.name} — CHAP & CO`,
       description: product.fullDescription,

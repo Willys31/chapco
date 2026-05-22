@@ -42,7 +42,7 @@ export const products: Product[] = [
     fullDescription:
       "L'attiéké déshydraté est une semoule de manioc fermentée puis séchée. Plat emblématique ivoirien, il bénéficie d'une longue conservation et d'une facilité de transport qui en font un produit phare pour l'export, particulièrement plébiscité par la diaspora africaine à travers le monde.",
     image: '/images/products/attieke.jpg',
-    imageAlt: 'Attiéké déshydraté en sachet',
+    imageAlt: "Attiéké déshydraté export Côte d'Ivoire en sachet",
     benefits: [
       '100 % naturel',
       'Longue conservation',
@@ -65,7 +65,7 @@ export const products: Product[] = [
     fullDescription:
       "L'huile rouge de palme est une huile alimentaire naturelle, particulièrement riche en bêta-carotène et en vitamines A & E. Elle est utilisée aussi bien en cuisine domestique que dans l'industrie agroalimentaire pour ses propriétés nutritionnelles et sa coloration caractéristique.",
     image: '/images/products/huile-palme.jpg',
-    imageAlt: 'Huile rouge de palme en bouteille',
+    imageAlt: "Huile rouge de palme naturelle export Côte d'Ivoire",
     targetSegments: [
       'Grande distribution',
       'Grossistes spécialisés',
@@ -86,7 +86,7 @@ export const products: Product[] = [
     fullDescription:
       'La farine de manioc est obtenue à partir de tubercules de manioc séchés puis finement broyés. Naturellement sans gluten, elle constitue une alternative idéale aux farines traditionnelles et trouve sa place dans de nombreuses préparations industrielles et artisanales.',
     image: '/images/products/farine-manioc.jpg',
-    imageAlt: 'Farine de manioc en sachet',
+    imageAlt: "Farine de manioc sans gluten export Côte d'Ivoire",
     opportunities: [
       'Segment sans gluten',
       'Substitut aux farines traditionnelles',
@@ -107,7 +107,7 @@ export const products: Product[] = [
     fullDescription:
       "Les feuilles d'hibiscus, disponibles en variétés rouge et blanche, sont un produit naturel polyvalent. Séchées avec soin, elles sont prêtes à être utilisées en infusions, dans des boissons traditionnelles ou intégrées à des préparations industrielles alimentaires et cosmétiques.",
     image: '/images/products/hibiscus-feuilles.jpg',
-    imageAlt: "Feuilles d'hibiscus rouge et blanc",
+    imageAlt: "Feuilles d'hibiscus séchées export Afrique de l'Ouest",
     uses: ['Infusions', 'Boissons naturelles', 'Industrie alimentaire', 'Cosmétique'],
     packaging: [
       { format: 'Sachets retail', target: 'Détail' },
@@ -129,7 +129,7 @@ export const products: Product[] = [
     fullDescription:
       "La graine de palme provient du fruit du palmier à huile. Elle est une matière première essentielle pour l'industrie agroalimentaire, cosmétique et énergétique. Sa polyvalence en fait l'une des matières premières les plus stratégiques au monde.",
     image: '/images/products/graine-palme.jpg',
-    imageAlt: 'Graines de palme rouges',
+    imageAlt: "Graines de palme matière première export Côte d'Ivoire",
     derivatives: [
       {
         category: 'Dérivés alimentaires',
@@ -160,7 +160,7 @@ export const products: Product[] = [
     fullDescription:
       "Le coco est une matière première polyvalente utilisée dans plusieurs industries grâce à ses nombreuses transformations possibles. De la pulpe à la fibre, en passant par l'eau et la coque, chaque partie du fruit trouve son application industrielle.",
     image: '/images/products/coco.jpg',
-    imageAlt: 'Noix de coco fraîches',
+    imageAlt: "Noix de coco matière première coprah export Afrique",
     derivatives: [
       {
         category: 'Dérivés alimentaires',
@@ -197,7 +197,7 @@ export const products: Product[] = [
     fullDescription:
       "L'hibiscus est une plante naturelle aux multiples usages, particulièrement appréciée pour la richesse de ses fleurs et de ses extraits. Utilisée dans l'alimentation, la cosmétique et les boissons, elle représente une matière première à fort potentiel.",
     image: '/images/products/hibiscus.jpg',
-    imageAlt: "Fleurs d'hibiscus séchées",
+    imageAlt: "Fleurs d'hibiscus séchées en gros export Afrique",
     derivatives: [
       {
         category: 'Dérivés alimentaires',
@@ -225,7 +225,7 @@ export const products: Product[] = [
     fullDescription:
       "L'hévéa est une matière première issue du latex, utilisée pour produire du caoutchouc naturel, indispensable dans de nombreuses industries. De la production de pneus aux gants médicaux, en passant par le mobilier en bois d'hévéa, cette ressource est stratégique à l'échelle mondiale.",
     image: '/images/products/hevea.jpg',
-    imageAlt: "Récolte de latex sur arbre d'hévéa",
+    imageAlt: "Récolte de latex hévéa caoutchouc naturel Côte d'Ivoire",
     derivatives: [
       {
         category: 'Dérivés industriels',
@@ -259,7 +259,7 @@ export const products: Product[] = [
     fullDescription:
       "Le karité est une noix africaine utilisée pour produire du beurre végétal riche, très recherché dans les industries alimentaire et cosmétique. Symbole du savoir-faire africain, il est particulièrement plébiscité sur le marché cosmétique mondial pour ses vertus hydratantes et nourrissantes.",
     image: '/images/products/karite.jpg',
-    imageAlt: 'Noix et beurre de karité',
+    imageAlt: "Beurre de karité brut Côte d'Ivoire export cosmétique",
     derivatives: [
       {
         category: 'Dérivés cosmétiques',

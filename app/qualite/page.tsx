@@ -9,7 +9,7 @@ import { QualityCTA } from '@/components/sections/quality/QualityCTA';
 export const metadata: Metadata = {
   title: 'Qualité & Conformité | CHAP & CO — Standards et certifications',
   description:
-    "CHAP & CO garantit traçabilité, certificats phytosanitaires, analyses microbiologiques et alignement aux normes européennes pour vos approvisionnements depuis la Côte d'Ivoire.",
+    "Certificat phytosanitaire, traçabilité et conformité normes européennes : CHAP & CO garantit la qualité de vos matières premières export. Devis.",
 };
 
 export default function QualityPage() {

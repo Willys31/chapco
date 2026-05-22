@@ -29,7 +29,7 @@ export const engagements: Engagement[] = [
       'Suivi régulier des conditions de récolte',
     ],
     image: '/images/engagements/selection-filieres.jpg',
-    imageAlt: 'Sélection rigoureuse des filières agricoles CHAP & CO',
+    imageAlt: "Sélection filières agricoles Côte d'Ivoire export CHAP & CO",
   },
   {
     number: '02',
@@ -63,7 +63,7 @@ export const engagements: Engagement[] = [
       'Documentation complète des contrôles effectués',
     ],
     image: '/images/engagements/controle-qualite.jpg',
-    imageAlt: 'Contrôle qualité des produits CHAP & CO',
+    imageAlt: 'Contrôle qualité matières premières export CHAP & CO',
   },
   {
     number: '04',
@@ -80,7 +80,7 @@ export const engagements: Engagement[] = [
       'Accessibilité des informations sur demande',
     ],
     image: '/images/engagements/tracabilite.jpg',
-    imageAlt: 'Traçabilité des produits CHAP & CO',
+    imageAlt: 'Traçabilité produits agricoles export CHAP & CO',
   },
   {
     number: '05',
@@ -98,7 +98,7 @@ export const engagements: Engagement[] = [
       'Documentation douanière complète',
     ],
     image: '/images/engagements/documentation-export.jpg',
-    imageAlt: 'Documentation export CHAP & CO',
+    imageAlt: 'Documentation export certificats phytosanitaires CHAP & CO',
   },
   {
     number: '06',
@@ -115,6 +115,6 @@ export const engagements: Engagement[] = [
       'Coordination avec transitaires de destination',
     ],
     image: '/images/engagements/logistique-maritime.jpg',
-    imageAlt: 'Logistique maritime CHAP & CO',
+    imageAlt: 'Logistique maritime FOB CIF export Abidjan CHAP & CO',
   },
 ];

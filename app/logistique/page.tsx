@@ -9,7 +9,7 @@ import { LogisticsCTA } from '@/components/sections/logistics/LogisticsCTA';
 export const metadata: Metadata = {
   title: 'Logistique Export | CHAP & CO — FOB Abidjan, CIF Europe',
   description:
-    "CHAP & CO assure le transport maritime sécurisé de vos matières premières depuis le port d'Abidjan vers Marseille, Anvers, Rotterdam et autres ports mondiaux. Modes FOB et CIF disponibles.",
+    "Export FOB Abidjan ou CIF Europe : CHAP & CO assure la logistique maritime sécurisée depuis Abidjan vers Marseille, Anvers, Rotterdam. Devis.",
 };
 
 export default function LogisticsPage() {
