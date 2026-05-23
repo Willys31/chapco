@@ -8,7 +8,7 @@ export function JsonLd() {
     name: siteConfig.legalName,
     alternateName: siteConfig.name,
     url: siteConfig.url,
-    logo: `${siteConfig.url}/CHAP LOGO.png`,
+    logo: `${siteConfig.url}/chapco-logo.png`,
     description: siteConfig.description,
     foundingDate: `${siteConfig.foundedYear}-01-01`,
     founder: {

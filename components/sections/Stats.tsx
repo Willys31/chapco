@@ -1,47 +1,33 @@
 'use client';
 
 import CountUp from 'react-countup';
+import { useTranslations } from 'next-intl';
 import { FadeIn } from '@/components/animations/FadeIn';
 
-const stats = [
-  {
-    value: 3,
-    label: 'Années d\'expérience',
-    suffix: '',
-    description: 'Une jeune entreprise ambitieuse',
-  },
-  {
-    value: 9,
-    label: 'Filières maîtrisées',
-    suffix: '+',
-    description: "Du karité à l'hévéa",
-  },
-  {
-    value: 15,
-    label: 'Pays de destination',
-    suffix: '+',
-    description: 'Europe, Asie, Amériques',
-  },
-  {
-    value: 100,
-    label: 'Traçabilité produits',
-    suffix: '%',
-    description: 'De la ferme au conteneur',
-  },
-];
+const richOptions = {
+  em: (chunks: React.ReactNode) => <em className="italic text-forest-500">{chunks}</em>,
+  br: () => <br />,
+};
 
 export function Stats() {
+  const t = useTranslations('stats');
+
+  const stats = [
+    { value: 3, suffix: '', label: t('years_label'), description: t('years_desc') },
+    { value: 9, suffix: '+', label: t('sectors_label'), description: t('sectors_desc') },
+    { value: 15, suffix: '+', label: t('countries_label'), description: t('countries_desc') },
+    { value: 100, suffix: '%', label: t('traceability_label'), description: t('traceability_desc') },
+  ];
+
   return (
     <section className="py-24 lg:py-32 bg-cream">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <FadeIn className="text-center mb-20">
           <p className="text-xs tracking-[0.3em] uppercase text-sage-700 mb-4">
-            En quelques chiffres
+            {t('section_eyebrow')}
           </p>
           <h2 className="text-4xl md:text-5xl font-light text-navy-700 tracking-tight">
-            Une expertise <em className="italic text-forest-500">africaine</em>
-            <br />
-            au service du monde
+            {t.rich('section_title', richOptions)}
           </h2>
         </FadeIn>
 

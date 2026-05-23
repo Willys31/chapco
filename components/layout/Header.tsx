@@ -1,17 +1,21 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import { company } from '@/data/company';
 import { Button } from '@/components/ui/Button';
 import { MobileMenu } from './MobileMenu';
+import { LanguageSwitcher } from './LanguageSwitcher';
 import { cn } from '@/lib/utils';
 import { Container } from '@/components/ui/Container';
 
 export function Header() {
+  const t = useTranslations('nav');
+  const tCommon = useTranslations('common');
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -21,14 +25,12 @@ export function Header() {
     const handleScroll = () => {
       const currentY = window.scrollY;
 
-      // Show/hide on scroll direction
       if (currentY > lastScrollY && currentY > 100) {
         setHidden(true);
       } else {
         setHidden(false);
       }
 
-      // Switch to opaque when scrolled
       setScrolled(currentY > 20);
       setLastScrollY(currentY);
     };
@@ -70,7 +72,7 @@ export function Header() {
                         : 'text-white/90 hover:text-white hover:bg-white/10'
                     )}
                   >
-                    {item.label}
+                    {t(item.key as Parameters<typeof t>[0])}
                     <span className={cn(
                       'absolute bottom-0 left-4 right-4 h-px scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left',
                       scrolled ? 'bg-navy-700' : 'bg-sage-300'
@@ -80,13 +82,17 @@ export function Header() {
               </nav>
 
               {/* Desktop CTA */}
-              <div className="hidden lg:flex items-center">
-                <Button
-                  variant={scrolled ? 'primary' : 'outline-white'}
-                  size="sm"
-                >
-                  Demander un devis
-                </Button>
+              <div className="hidden lg:flex items-center gap-3">
+                <LanguageSwitcher scrolled={scrolled} />
+                <Link href="/contact">
+                  <Button
+                    type="button"
+                    variant={scrolled ? 'primary' : 'outline-white'}
+                    size="sm"
+                  >
+                    {tCommon('cta_quote')}
+                  </Button>
+                </Link>
               </div>
 
               {/* Mobile hamburger */}
@@ -98,7 +104,7 @@ export function Header() {
                     ? 'text-navy-700 hover:bg-navy-50'
                     : 'text-white hover:bg-white/10'
                 )}
-                aria-label="Ouvrir le menu"
+                aria-label={t('open_menu')}
               >
                 <Menu size={22} />
               </button>
@@ -119,7 +125,7 @@ function LogoText({ scrolled }: { scrolled: boolean }) {
       !scrolled && 'bg-white/95 backdrop-blur-sm px-3 py-1.5 shadow-sm'
     )}>
       <Image
-        src="/CHAP LOGO.png"
+        src="/chapco-logo.png"
         alt="CHAP & CO"
         width={110}
         height={51}

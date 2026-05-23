@@ -1,9 +1,10 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import Link from 'next/link';
 import Image from 'next/image';
 import { Phone, Mail, X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import { company } from '@/data/company';
 import { Button } from '@/components/ui/Button';
 
@@ -45,6 +46,9 @@ const itemVariants = {
 };
 
 export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
+  const t = useTranslations('nav');
+  const tCommon = useTranslations('common');
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -71,9 +75,10 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
               <LogoText />
               <button
+                type="button"
                 onClick={onClose}
                 className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
-                aria-label="Fermer le menu"
+                aria-label={t('close_menu')}
               >
                 <X size={20} />
               </button>
@@ -95,7 +100,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                       onClick={onClose}
                       className="block py-3 px-4 rounded-xl text-3xl font-poppins font-bold text-white/90 hover:text-sage-300 hover:bg-white/5 transition-all duration-200"
                     >
-                      {item.label}
+                      {t(item.key as Parameters<typeof t>[0])}
                     </Link>
                   </motion.li>
                 ))}
@@ -109,9 +114,11 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 animate="visible"
                 className="mt-8"
               >
-                <Button size="lg" className="w-full justify-center">
-                  Demander un devis
-                </Button>
+                <Link href="/contact" onClick={onClose}>
+                  <Button type="button" size="lg" className="w-full justify-center">
+                    {tCommon('cta_quote')}
+                  </Button>
+                </Link>
               </motion.div>
             </nav>
 
@@ -148,7 +155,7 @@ function LogoText() {
   return (
     <div className="bg-white rounded-xl px-3 py-1.5 inline-block">
       <Image
-        src="/CHAP LOGO.png"
+        src="/chapco-logo.png"
         alt="CHAP & CO"
         width={110}
         height={51}

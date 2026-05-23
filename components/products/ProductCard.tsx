@@ -1,18 +1,22 @@
 'use client';
 
-import Link from 'next/link';
 import { useRef, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { Link } from '@/i18n/navigation';
 import type { Product } from '@/data/products';
+import { getLocalized } from '@/data/products';
 import { getProductIcon } from '@/lib/product-icons';
 
 interface ProductCardProps {
   product: Product;
+  locale: string;
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ product, locale }: ProductCardProps) {
   const [imageError, setImageError] = useState(false);
+  const t = useTranslations('products_grid');
   const Icon = getProductIcon(product.slug);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -35,16 +39,20 @@ export function ProductCard({ product }: ProductCardProps) {
     mouseY.set(0);
   };
 
+  const name = getLocalized(product.name, locale);
+  const categoryLabel = getLocalized(product.categoryLabel, locale);
+  const shortDescription = getLocalized(product.shortDescription, locale);
+  const imageAlt = getLocalized(product.imageAlt, locale);
+
   return (
-    <div style={{ perspective: '1000px' }} onMouseMove={onMouseMove} onMouseLeave={onMouseLeave}>
+    <div className="[perspective:1000px]" onMouseMove={onMouseMove} onMouseLeave={onMouseLeave}>
       <motion.div ref={ref} style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}>
         <Link href={`/produits/${product.slug}`} className="group block">
-          {/* Image zone */}
           <div className="relative aspect-[4/5] overflow-hidden bg-cream rounded-sm mb-5">
             {!imageError ? (
               <img
                 src={product.image}
-                alt={product.imageAlt}
+                alt={imageAlt}
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 loading="lazy"
                 onError={() => setImageError(true)}
@@ -53,41 +61,37 @@ export function ProductCard({ product }: ProductCardProps) {
               <PlaceholderImage Icon={Icon} slug={product.slug} />
             )}
 
-            {/* Overlay */}
             <div className="absolute inset-0 bg-navy-900/0 group-hover:bg-navy-900/10 transition-colors duration-500" />
 
-            {/* Category badge */}
             <div className="absolute top-4 left-4">
               <span className={`text-xs tracking-[0.2em] uppercase backdrop-blur-md px-3 py-1.5 rounded-full font-medium ${
                 product.category === 'consommable'
                   ? 'bg-sage-500/90 text-white'
                   : 'bg-navy-700/90 text-white'
               }`}>
-                {product.categoryLabel}
+                {categoryLabel}
               </span>
             </div>
 
-            {/* Hover: "Voir le produit" overlay */}
             <div className="absolute inset-0 flex items-end p-5 opacity-0 group-hover:opacity-100 transition-all duration-400">
               <div className="w-full bg-white/90 backdrop-blur-sm rounded-sm px-4 py-3 flex items-center justify-between translate-y-2 group-hover:translate-y-0 transition-transform duration-400">
                 <span className="text-navy-700 text-xs font-medium tracking-[0.15em] uppercase">
-                  Voir le produit
+                  {t('view_product')}
                 </span>
                 <ArrowUpRight className="w-4 h-4 text-navy-700" />
               </div>
             </div>
           </div>
 
-          {/* Info */}
           <div className="space-y-1.5">
             <h3 className="text-lg font-medium text-navy-700 tracking-tight group-hover:text-sage-700 transition-colors">
-              {product.name}
+              {name}
             </h3>
             <p className="text-sm text-ink/60 font-light leading-relaxed">
-              {product.shortDescription}
+              {shortDescription}
             </p>
             <p className="text-xs text-sage-700 font-medium pt-1 flex items-center gap-1">
-              Voir la fiche
+              {t('view_sheet')}
               <span className="group-hover:translate-x-1 transition-transform inline-block">→</span>
             </p>
           </div>
@@ -118,7 +122,6 @@ function PlaceholderImage({
         <div className="w-20 h-20 rounded-full bg-white/60 backdrop-blur-sm border border-sage-500/30 flex items-center justify-center shadow-sm">
           <Icon className="w-9 h-9 text-sage-600" strokeWidth={1.2} />
         </div>
-        <span className="text-xs tracking-[0.25em] uppercase text-navy-700/40 font-medium">Image à venir</span>
       </div>
     </div>
   );

@@ -1,8 +1,9 @@
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
 import { Phone, Mail, MapPin } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import { company } from '@/data/company';
 import { ArrowsBackground } from '@/components/animations/ArrowsBackground';
 import { Container } from '@/components/ui/Container';
@@ -10,19 +11,12 @@ import { Container } from '@/components/ui/Container';
 const currentYear = new Date().getFullYear();
 
 export function Footer() {
-
-  const footerProducts = [
-    "Attiéké déshydraté",
-    "Huile rouge de palme",
-    "Karité",
-    "Hibiscus",
-    "Hévéa",
-    "Noix de coco",
-  ];
+  const t = useTranslations('footer');
+  const tCommon = useTranslations('common');
+  const tNav = useTranslations('nav');
 
   return (
     <footer className="relative bg-navy-900 text-white overflow-hidden">
-      {/* Arrows signature en filigrane */}
       <ArrowsBackground baseOpacity={0.2} />
 
       <div className="relative z-10">
@@ -35,21 +29,21 @@ export function Footer() {
                 <LogoText />
               </div>
               <p className="text-sage-300 text-sm leading-relaxed mb-4 font-medium italic">
-                &quot;{company.tagline}&quot;
+                &quot;{typeof company.tagline === 'object' ? company.tagline.fr : company.tagline}&quot;
               </p>
               <div className="flex items-center gap-2 text-gray-400 text-sm">
                 <MapPin size={14} className="text-sage-500 shrink-0" />
                 <span>{company.location.city}, {company.location.country}</span>
               </div>
               <p className="text-gray-500 text-xs mt-3">
-                Fondée en {company.foundedYear}
+                {tCommon('founded_in')} {company.foundedYear}
               </p>
             </div>
 
             {/* Col 2 — Navigation */}
             <div>
               <h4 className="text-white font-semibold mb-5 text-sm uppercase tracking-widest">
-                Navigation
+                {t('navigation')}
               </h4>
               <ul className="space-y-3">
                 {company.navigation.map((item) => (
@@ -59,42 +53,45 @@ export function Footer() {
                       className="text-gray-400 hover:text-sage-300 transition-colors duration-200 text-sm group flex items-center gap-2"
                     >
                       <span className="w-0 group-hover:w-3 h-px bg-sage-300 transition-all duration-300 inline-block" />
-                      {item.label}
+                      {tNav(item.key as Parameters<typeof tNav>[0])}
                     </Link>
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* Col 3 — Produits phares */}
+            {/* Col 3 — Featured products */}
             <div>
               <h4 className="text-white font-semibold mb-5 text-sm uppercase tracking-widest">
-                Produits phares
+                {t('featured_products')}
               </h4>
               <ul className="space-y-3">
-                {footerProducts.map((product) => (
-                  <li key={product}>
-                    <Link
-                      href="/produits"
-                      className="text-gray-400 hover:text-sage-300 transition-colors duration-200 text-sm group flex items-center gap-2"
-                    >
-                      <span className="w-1 h-1 rounded-full bg-sage-500 shrink-0 group-hover:bg-sage-300 transition-colors duration-200" />
-                      {product}
-                    </Link>
-                  </li>
-                ))}
+                {company.products.map((product) => {
+                  const label = typeof product === 'object' ? product.fr : product;
+                  return (
+                    <li key={label}>
+                      <Link
+                        href="/produits"
+                        className="text-gray-400 hover:text-sage-300 transition-colors duration-200 text-sm group flex items-center gap-2"
+                      >
+                        <span className="w-1 h-1 rounded-full bg-sage-500 shrink-0 group-hover:bg-sage-300 transition-colors duration-200" />
+                        {label}
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
 
             {/* Col 4 — Contact */}
             <div>
               <h4 className="text-white font-semibold mb-5 text-sm uppercase tracking-widest">
-                Contact
+                {t('contact')}
               </h4>
               <div className="space-y-4">
                 <div>
                   <p className="text-white font-medium text-sm mb-1">{company.contact.name}</p>
-                  <p className="text-gray-500 text-xs">Directeur Général</p>
+                  <p className="text-gray-500 text-xs">{t('general_manager')}</p>
                 </div>
                 <a
                   href={`tel:${company.contact.phone.replace(/\s/g, '')}`}
@@ -125,15 +122,15 @@ export function Footer() {
           <Container className="py-5">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
               <p className="text-gray-500 text-xs" suppressHydrationWarning>
-                © {currentYear} {company.name}. Tous droits réservés.
+                © {currentYear} {company.name}. {tCommon('all_rights_reserved')}
               </p>
               <div className="flex items-center gap-4 text-xs text-gray-500">
                 <Link href="/mentions-legales" className="hover:text-sage-300 transition-colors duration-200">
-                  Mentions légales
+                  {t('legal')}
                 </Link>
                 <span className="text-gray-700">•</span>
                 <Link href="/politique-confidentialite" className="hover:text-sage-300 transition-colors duration-200">
-                  Politique de confidentialité
+                  {t('privacy')}
                 </Link>
               </div>
             </div>
@@ -147,7 +144,7 @@ export function Footer() {
 function LogoText() {
   return (
     <Image
-      src="/LOGO CHAP foot.png"
+      src="/chapco-logo-footer.png"
       alt="CHAP & CO"
       width={160}
       height={60}

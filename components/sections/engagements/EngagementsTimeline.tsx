@@ -2,12 +2,16 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { useTranslations, useLocale } from 'next-intl';
 import { FadeIn } from '@/components/animations/FadeIn';
-import { engagements, type Engagement } from '@/data/engagements';
+import { engagements, getLocalized, type Engagement } from '@/data/engagements';
 import { Check } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 export function EngagementsTimeline() {
+  const t = useTranslations('engagements');
+  const locale = useLocale();
+
   return (
     <section className="py-24 lg:py-32 bg-white">
       <div className="container max-w-7xl mx-auto px-6 lg:px-12">
@@ -21,6 +25,8 @@ export function EngagementsTimeline() {
                 engagement={engagement}
                 index={index}
                 isReversed={index % 2 === 1}
+                stepLabel={t('timeline_step')}
+                locale={locale}
               />
             ))}
           </div>
@@ -34,10 +40,14 @@ function EngagementBlock({
   engagement,
   index,
   isReversed,
+  stepLabel,
+  locale,
 }: {
   engagement: Engagement;
   index: number;
   isReversed: boolean;
+  stepLabel: string;
+  locale: string;
 }) {
   const [imageError, setImageError] = useState(false);
   const Icon = engagement.icon;
@@ -58,7 +68,7 @@ function EngagementBlock({
             {!imageError ? (
               <Image
                 src={engagement.image}
-                alt={engagement.imageAlt}
+                alt={getLocalized(engagement.imageAlt, locale)}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
                 onError={() => setImageError(true)}
@@ -73,7 +83,7 @@ function EngagementBlock({
             <div className="absolute bottom-6 left-6">
               <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-2">
                 <span className="text-xs tracking-[0.3em] uppercase text-white font-medium">
-                  Engagement {engagement.number}
+                  {stepLabel} {engagement.number}
                 </span>
               </div>
             </div>
@@ -92,27 +102,27 @@ function EngagementBlock({
             </div>
 
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-navy-700 tracking-tight leading-[1.15] mb-6">
-              {engagement.title}
+              {getLocalized(engagement.title, locale)}
             </h2>
 
             <p className="text-lg md:text-xl font-light italic text-forest-500 mb-8">
-              {engagement.shortDescription}
+              {getLocalized(engagement.shortDescription, locale)}
             </p>
 
             <p className="text-base lg:text-lg text-ink/70 font-light leading-relaxed mb-10">
-              {engagement.longDescription}
+              {getLocalized(engagement.longDescription, locale)}
             </p>
 
             <div className="space-y-3 pl-6 border-l-2 border-sage-500/30">
               <p className="text-xs uppercase tracking-[0.2em] text-sage-700 font-medium mb-4">
-                En pratique
+                {stepLabel}
               </p>
               <ul className="space-y-3">
                 {engagement.keyPoints.map((point, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <Check className="w-4 h-4 text-sage-500 mt-1 flex-shrink-0" strokeWidth={2} />
                     <span className="text-sm lg:text-base text-ink/70 font-light leading-relaxed">
-                      {point}
+                      {getLocalized(point, locale)}
                     </span>
                   </li>
                 ))}
@@ -165,7 +175,6 @@ function PlaceholderEngagementImage({
         <div className="w-24 h-24 rounded-full bg-white/70 border border-sage-500/30 flex items-center justify-center backdrop-blur-sm">
           <Icon className="w-12 h-12 text-forest-500" strokeWidth={1} />
         </div>
-        <p className="text-xs uppercase tracking-[0.3em] text-sage-700/70">Image à venir</p>
       </div>
     </div>
   );

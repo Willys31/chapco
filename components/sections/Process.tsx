@@ -3,8 +3,9 @@
 import { useRef, useState, useEffect, forwardRef } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { useTranslations, useLocale } from 'next-intl';
 import { FadeIn } from '@/components/animations/FadeIn';
-import { processSteps, type ProcessStep } from '@/data/process';
+import { processSteps, type ProcessStep, getLocalized } from '@/data/process';
 import type { LucideIcon } from 'lucide-react';
 
 interface Point {
@@ -24,7 +25,13 @@ function buildSerpentinePath(points: Point[]): string {
   return d;
 }
 
+const richOptions = {
+  em: (chunks: React.ReactNode) => <em className="italic text-forest-500">{chunks}</em>,
+};
+
 export function Process() {
+  const t = useTranslations('process_section');
+  const locale = useLocale();
   const containerRef = useRef<HTMLDivElement>(null);
   const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [svgPath, setSvgPath] = useState('');
@@ -68,9 +75,9 @@ export function Process() {
     <section className="py-24 lg:py-32 bg-cream overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <FadeIn className="text-center mb-20 max-w-3xl mx-auto">
-          <p className="text-xs tracking-[0.3em] uppercase text-sage-700 mb-4">Notre processus</p>
+          <p className="text-xs tracking-[0.3em] uppercase text-sage-700 mb-4">{t('eyebrow')}</p>
           <h2 className="text-4xl md:text-5xl font-light text-navy-700 tracking-tight leading-[1.15]">
-            Six étapes, <em className="italic text-forest-500">une promesse</em>
+            {t.rich('title', richOptions)}
           </h2>
         </FadeIn>
 
@@ -82,7 +89,6 @@ export function Process() {
               height={svgDims.height}
               viewBox={`0 0 ${svgDims.width} ${svgDims.height}`}
             >
-              {/* Fond statique gris pâle */}
               <path
                 d={svgPath}
                 fill="none"
@@ -90,7 +96,6 @@ export function Process() {
                 strokeWidth="2"
                 strokeLinecap="round"
               />
-              {/* Tracé animé au scroll */}
               <motion.path
                 d={svgPath}
                 fill="none"
@@ -99,7 +104,6 @@ export function Process() {
                 strokeLinecap="round"
                 style={{ pathLength }}
               />
-              {/* Points de connexion */}
               {connectionPoints.map((p, i) => (
                 <g key={i}>
                   <circle cx={p.x} cy={p.y} r="10" fill="white" stroke="#A8C9A8" strokeWidth="2" />
@@ -119,6 +123,8 @@ export function Process() {
                 step={step}
                 index={index}
                 isReversed={index % 2 === 1}
+                locale={locale}
+                stepLabel={t('step_label')}
               />
             ))}
           </div>
@@ -128,17 +134,16 @@ export function Process() {
   );
 }
 
-// ─────────────────────────────────────────────
-// Carte d'une étape
-// ─────────────────────────────────────────────
 interface ProcessCardProps {
   step: ProcessStep;
   index: number;
   isReversed: boolean;
+  locale: string;
+  stepLabel: string;
 }
 
 const ProcessCard = forwardRef<HTMLDivElement, ProcessCardProps>(function ProcessCard(
-  { step, index, isReversed },
+  { step, index, isReversed, locale, stepLabel },
   ref
 ) {
   const [imageError, setImageError] = useState(false);
@@ -151,14 +156,13 @@ const ProcessCard = forwardRef<HTMLDivElement, ProcessCardProps>(function Proces
         isReversed ? 'lg:[&>*:first-child]:order-2' : ''
       }`}
     >
-      {/* IMAGE */}
       <FadeIn direction={isReversed ? 'right' : 'left'}>
         <div className={`relative z-10 ${isReversed ? 'lg:pl-16' : 'lg:pr-16'}`}>
           <div className="relative aspect-[16/10] overflow-hidden rounded-sm group">
             {!imageError ? (
               <Image
                 src={step.image}
-                alt={step.imageAlt}
+                alt={getLocalized(step.imageAlt, locale)}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
                 onError={() => setImageError(true)}
@@ -179,7 +183,6 @@ const ProcessCard = forwardRef<HTMLDivElement, ProcessCardProps>(function Proces
         </div>
       </FadeIn>
 
-      {/* TEXTE */}
       <FadeIn delay={0.2} direction={isReversed ? 'left' : 'right'}>
         <div
           className={`flex flex-col justify-center z-10 ${
@@ -191,16 +194,16 @@ const ProcessCard = forwardRef<HTMLDivElement, ProcessCardProps>(function Proces
               <Icon className="w-5 h-5 text-forest-500" strokeWidth={1.5} />
             </div>
             <span className="text-xs tracking-[0.25em] uppercase text-sage-700 font-medium">
-              Étape {step.number}
+              {stepLabel} {step.number}
             </span>
           </div>
 
           <h3 className="text-3xl lg:text-4xl font-light text-navy-700 tracking-tight leading-[1.2] mb-5">
-            {step.title}
+            {getLocalized(step.title, locale)}
           </h3>
 
           <p className="text-base lg:text-lg text-ink/70 font-light leading-relaxed max-w-md">
-            {step.description}
+            {getLocalized(step.description, locale)}
           </p>
         </div>
       </FadeIn>
@@ -208,9 +211,6 @@ const ProcessCard = forwardRef<HTMLDivElement, ProcessCardProps>(function Proces
   );
 });
 
-// ─────────────────────────────────────────────
-// Placeholder si image manquante
-// ─────────────────────────────────────────────
 function PlaceholderProcessImage({
   Icon,
   number,
@@ -241,7 +241,6 @@ function PlaceholderProcessImage({
         <div className="w-20 h-20 rounded-full bg-white/70 border border-sage-500/30 flex items-center justify-center backdrop-blur-sm">
           <Icon className="w-10 h-10 text-forest-500" strokeWidth={1} />
         </div>
-        <p className="text-xs uppercase tracking-[0.3em] text-sage-700/60">Image à venir</p>
       </div>
     </div>
   );

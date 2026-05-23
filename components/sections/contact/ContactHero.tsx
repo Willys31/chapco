@@ -1,10 +1,11 @@
-'use client';
-
+import { getTranslations } from 'next-intl/server';
 import { FadeIn } from '@/components/animations/FadeIn';
 import { ArrowsBackground } from '@/components/animations/ArrowsBackground';
 import { MessageSquare } from 'lucide-react';
 
-export function ContactHero() {
+export async function ContactHero() {
+  const t = await getTranslations('contact');
+
   return (
     <section className="relative min-h-[55vh] bg-navy-900 overflow-hidden flex items-center pt-40 pb-20">
       <div className="absolute inset-0 opacity-[0.08] pointer-events-none">
@@ -17,25 +18,21 @@ export function ContactHero() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
           <div className="lg:col-span-8 space-y-8">
-            
             <FadeIn delay={0.1}>
               <p className="text-xs tracking-[0.3em] uppercase text-sage-300">
-                Parlons de votre projet
+                {t('hero_eyebrow')}
               </p>
             </FadeIn>
 
             <FadeIn delay={0.2}>
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-light text-white tracking-tight leading-[1.05]">
-                Construisons ensemble
-                <br />
-                <em className="italic text-sage-300">votre approvisionnement.</em>
+                {t('hero_title')}
               </h1>
             </FadeIn>
 
             <FadeIn delay={0.35}>
               <p className="text-lg md:text-xl text-white/60 font-light leading-relaxed max-w-xl">
-                Devis, échantillons, dossier qualité ou simple échange —
-                nous répondons sous 48h ouvrées.
+                {t('hero_subtitle')}
               </p>
             </FadeIn>
           </div>

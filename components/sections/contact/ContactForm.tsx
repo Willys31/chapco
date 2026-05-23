@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSearchParams } from 'next/navigation';
+import { useTranslations, useLocale } from 'next-intl';
 import { toast } from 'sonner';
 import {
   contactFormSchema,
@@ -11,13 +12,26 @@ import {
   requestTypes,
   productOptions,
 } from '@/lib/validations/contact';
+import { products, getLocalized } from '@/data/products';
 import { Button } from '@/components/ui/Button';
 import { Send, Loader2, AlertCircle, CheckCircle2 } from 'lucide-react';
 
 export function ContactForm() {
+  const t = useTranslations('contact');
+  const locale = useLocale();
   const searchParams = useSearchParams();
   const preSelectedProduct = searchParams.get('product');
   const preSelectedType = searchParams.get('type') as ContactFormValues['requestType'] | null;
+
+  const translatedRequestTypes = requestTypes.map((rt) => ({
+    value: rt.value,
+    label: t(`form_type_${rt.value}` as Parameters<typeof t>[0]),
+  }));
+
+  const translatedProductOptions = products.map((p) => ({
+    value: p.slug,
+    label: getLocalized(p.name, locale),
+  }));
 
   const {
     register,
@@ -46,15 +60,16 @@ export function ContactForm() {
 
   useEffect(() => {
     if (preSelectedProduct && preSelectedType) {
-      const productLabel = productOptions.find((p) => p.value === preSelectedProduct)?.label;
-      const typeLabel = requestTypes.find((t) => t.value === preSelectedType)?.label;
+      const productLabel = translatedProductOptions.find((p) => p.value === preSelectedProduct)?.label;
+      const typeLabel = translatedRequestTypes.find((rt) => rt.value === preSelectedType)?.label;
       if (productLabel && typeLabel) {
         setValue(
           'message',
-          `Bonjour,\n\nJe souhaite vous contacter au sujet de : ${productLabel}.\nType de demande : ${typeLabel}.\n\n[Précisez ici vos volumes, conditionnements, destinations...]\n\nCordialement,`
+          `${productLabel}\n${typeLabel}\n\n`
         );
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [preSelectedProduct, preSelectedType, setValue]);
 
   const messageValue = watch('message') ?? '';
@@ -67,18 +82,18 @@ export function ContactForm() {
         body: JSON.stringify(data),
       });
 
-      if (!response.ok) throw new Error("Erreur lors de l'envoi");
+      if (!response.ok) throw new Error('send_error');
 
-      toast.success('Message envoyé avec succès !', {
-        description: 'Nous reviendrons vers vous sous 48h ouvrées.',
+      toast.success(t('form_success_title'), {
+        description: t('form_success_desc'),
         duration: 5000,
         icon: <CheckCircle2 className="w-5 h-5 text-green-500" />,
       });
 
       reset();
     } catch {
-      toast.error("Erreur lors de l'envoi", {
-        description: 'Veuillez réessayer ou nous contacter directement par téléphone.',
+      toast.error(t('form_error_title'), {
+        description: t('form_error_desc'),
         duration: 5000,
         icon: <AlertCircle className="w-5 h-5 text-red-500" />,
       });
@@ -88,62 +103,61 @@ export function ContactForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-8">
 
-      {/* ── IDENTITÉ ── */}
       <fieldset className="space-y-5">
         <legend className="text-xs tracking-[0.2em] uppercase text-sage-700 font-medium mb-5">
-          Vos coordonnées
+          {t('form_section_identity')}
         </legend>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <FormField label="Nom complet" required error={errors.fullName?.message}>
+          <FormField label={t('form_fullname')} required error={errors.fullName?.message}>
             <input
               {...register('fullName')}
-              placeholder="Jean Dupont"
+              placeholder={t('form_fullname_placeholder')}
               className="form-input"
             />
           </FormField>
 
-          <FormField label="Entreprise" required error={errors.company?.message}>
+          <FormField label={t('form_company')} required error={errors.company?.message}>
             <input
               {...register('company')}
-              placeholder="SARL Distribution SA"
+              placeholder={t('form_company_placeholder')}
               className="form-input"
             />
           </FormField>
         </div>
 
-        <FormField label="Fonction" optional error={errors.position?.message}>
+        <FormField label={t('form_position')} optional error={errors.position?.message} optionalLabel={t('form_optional')}>
           <input
             {...register('position')}
-            placeholder="Directeur achats"
+            placeholder={t('form_position_placeholder')}
             className="form-input"
           />
         </FormField>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <FormField label="Email professionnel" required error={errors.email?.message}>
+          <FormField label={t('form_email')} required error={errors.email?.message}>
             <input
               {...register('email')}
               type="email"
-              placeholder="jean.dupont@entreprise.com"
+              placeholder={t('form_email_placeholder')}
               className="form-input"
             />
           </FormField>
 
-          <FormField label="Téléphone" required error={errors.phone?.message}>
+          <FormField label={t('form_phone')} required error={errors.phone?.message}>
             <input
               {...register('phone')}
               type="tel"
-              placeholder="+33 6 00 00 00 00"
+              placeholder={t('form_phone_placeholder')}
               className="form-input"
             />
           </FormField>
         </div>
 
-        <FormField label="Pays" required error={errors.country?.message}>
+        <FormField label={t('form_country')} required error={errors.country?.message}>
           <input
             {...register('country')}
-            placeholder="France"
+            placeholder={t('form_country_placeholder')}
             className="form-input"
           />
         </FormField>
@@ -151,20 +165,18 @@ export function ContactForm() {
 
       <div className="h-px bg-sage-500/15" />
 
-      {/* ── DEMANDE ── */}
       <fieldset className="space-y-5">
         <legend className="text-xs tracking-[0.2em] uppercase text-sage-700 font-medium mb-5">
-          Votre demande
+          {t('form_section_request')}
         </legend>
 
-        {/* Type de demande */}
-        <FormField label="Type de demande" required error={errors.requestType?.message}>
+        <FormField label={t('form_request_type')} required error={errors.requestType?.message}>
           <Controller
             name="requestType"
             control={control}
             render={({ field }) => (
               <div className="flex flex-wrap gap-2">
-                {requestTypes.map((type) => (
+                {translatedRequestTypes.map((type) => (
                   <button
                     key={type.value}
                     type="button"
@@ -183,18 +195,13 @@ export function ContactForm() {
           />
         </FormField>
 
-        {/* Produits — multi-select */}
-        <FormField
-          label="Produit(s) d'intérêt"
-          required
-          error={errors.products?.message}
-        >
+        <FormField label={t('form_products')} required error={errors.products?.message}>
           <Controller
             name="products"
             control={control}
             render={({ field }) => (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {productOptions.map((product) => {
+                {translatedProductOptions.map((product) => {
                   const checked = field.value?.includes(product.value) ?? false;
                   return (
                     <label
@@ -225,26 +232,24 @@ export function ContactForm() {
           />
         </FormField>
 
-        {/* Volume estimé */}
-        <FormField label="Volume estimé" optional error={errors.estimatedVolume?.message}>
+        <FormField label={t('form_volume')} optional error={errors.estimatedVolume?.message} optionalLabel={t('form_optional')}>
           <input
             {...register('estimatedVolume')}
-            placeholder="ex: 5 tonnes/mois, 2 conteneurs/an…"
+            placeholder={t('form_volume_placeholder')}
             className="form-input"
           />
         </FormField>
 
-        {/* Message */}
         <FormField
-          label="Votre message"
+          label={t('form_message')}
           required
-          hint={`${messageValue.length} / 2000`}
+          hint={`${messageValue.length} ${t('form_counter_suffix')}`}
           error={errors.message?.message}
         >
           <textarea
             {...register('message')}
             rows={6}
-            placeholder="Décrivez votre besoin, vos volumes, votre marché de destination..."
+            placeholder={t('form_message_placeholder')}
             className="form-input resize-none"
           />
         </FormField>
@@ -252,7 +257,6 @@ export function ContactForm() {
 
       <div className="h-px bg-sage-500/15" />
 
-      {/* ── RGPD ── */}
       <div>
         <label className="flex items-start gap-3 cursor-pointer group">
           <input
@@ -261,9 +265,7 @@ export function ContactForm() {
             className="mt-0.5 w-4 h-4 accent-navy-700 shrink-0"
           />
           <span className="text-sm text-ink/60 font-light leading-relaxed group-hover:text-ink/80 transition-colors">
-            J&apos;accepte que mes données soient utilisées par CHAP & CO pour traiter
-            ma demande. Conformément au RGPD, vous pouvez à tout moment demander
-            la suppression de vos données.
+            {t('form_gdpr')}
           </span>
         </label>
         {errors.acceptTerms && (
@@ -274,7 +276,6 @@ export function ContactForm() {
         )}
       </div>
 
-      {/* ── SUBMIT ── */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
         <Button
           type="submit"
@@ -286,36 +287,34 @@ export function ContactForm() {
           {isSubmitting ? (
             <>
               <Loader2 className="w-4 h-4 animate-spin" />
-              Envoi en cours...
+              {t('form_submitting')}
             </>
           ) : (
             <>
               <Send className="w-4 h-4" />
-              Envoyer ma demande
+              {t('form_submit')}
             </>
           )}
         </Button>
         <p className="text-xs text-ink/40 font-light">
-          Réponse garantie sous 48h ouvrées
+          {t('form_submit_note')}
         </p>
       </div>
     </form>
   );
 }
 
-// ─────────────────────────────────────────────────────
-// FormField wrapper
-// ─────────────────────────────────────────────────────
 interface FormFieldProps {
   label?: string;
   required?: boolean;
   optional?: boolean;
+  optionalLabel?: string;
   hint?: string;
   error?: string;
   children: React.ReactNode;
 }
 
-function FormField({ label, required, optional, hint, error, children }: FormFieldProps) {
+function FormField({ label, required, optional, optionalLabel, hint, error, children }: FormFieldProps) {
   return (
     <div className="space-y-1.5">
       {label && (
@@ -324,7 +323,7 @@ function FormField({ label, required, optional, hint, error, children }: FormFie
             {label}
             {required && <span className="text-red-500 ml-0.5">*</span>}
             {optional && (
-              <span className="text-ink/40 font-light ml-1.5 text-xs">(facultatif)</span>
+              <span className="text-ink/40 font-light ml-1.5 text-xs">{optionalLabel}</span>
             )}
           </label>
           {hint && <span className="text-xs text-ink/40">{hint}</span>}

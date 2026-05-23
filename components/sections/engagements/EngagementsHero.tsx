@@ -1,8 +1,16 @@
+import { getTranslations } from 'next-intl/server';
 import { FadeIn } from '@/components/animations/FadeIn';
 import { ArrowsBackground } from '@/components/animations/ArrowsBackground';
 import { ShieldCheck } from 'lucide-react';
 
-export function EngagementsHero() {
+const richOptions = {
+  em: (chunks: React.ReactNode) => <em className="italic text-sage-300">{chunks}</em>,
+  br: () => <br />,
+};
+
+export async function EngagementsHero() {
+  const t = await getTranslations('engagements');
+
   return (
     <section className="relative min-h-[70vh] flex items-center bg-navy-900 overflow-hidden pt-32 pb-20">
       <div className="absolute inset-0 opacity-[0.08] pointer-events-none">
@@ -25,22 +33,19 @@ export function EngagementsHero() {
 
         <FadeIn delay={0.3}>
           <p className="text-xs tracking-[0.3em] uppercase text-sage-300 mb-6">
-            Nos six promesses
+            {t('hero_eyebrow')}
           </p>
         </FadeIn>
 
         <FadeIn delay={0.4}>
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-light text-white tracking-tight leading-[1.05] mb-8">
-            La <em className="italic text-sage-300">rigueur</em>
-            <br />
-            au service de votre confiance.
+            {t.rich('hero_title', richOptions)}
           </h1>
         </FadeIn>
 
         <FadeIn delay={0.6}>
           <p className="text-lg md:text-xl text-cream/70 font-light max-w-3xl mx-auto leading-relaxed">
-            De la sélection des filières en Afrique de l&apos;Ouest à la livraison dans les ports
-            européens, chaque étape est pensée pour sécuriser votre approvisionnement.
+            {t('hero_subtitle')}
           </p>
         </FadeIn>
       </div>
